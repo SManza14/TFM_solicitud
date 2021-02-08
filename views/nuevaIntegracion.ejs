@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+<!--
+    <script src="https://unpkg.com/@popperjs/core@^2.0.0"></script>
+    <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/bootstrap-datepicker.js"></script>
+-->
+</head>
+
+<body>
+    <p>Nueva integración</p>
+
+    <div>
+        <form method="POST" action="/nuevaIntegracion">
+            <fieldset>
+                <legend>Nueva Integración</legend>
+                <div>
+                    <label>OLT</label>
+                    <input type="text" name="OLT" placeholder="Introduzca OLT">
+                </div>
+                <div>
+                    <label>Central</label>
+                    <input type="text" name="central" placeholder="Introduzca central">
+                </div>
+                <div>
+                    <label>MIGA</label>
+                    <input type="text" name="MIGA" placeholder="Introduzca MIGA">
+                </div>
+                <div>
+                    <label>agregador</label>
+                    <input type="text" name="agregador" placeholder="Introduzca el equipo agregador">
+                </div>
+                <div>
+                    <label>DN</label>
+                    <input type="text" name="DN" placeholder="Introduzca los equipos de distribución">
+                </div>
+
+                <div>
+                    <label>POP</label>
+                    <select name="POP">
+                        <option value='Badajoz'>Badajoz</option>
+                        <option value='Cuenca'>Cuenca</option>
+                        <option value='Cordoba'>Cordoba</option>
+                        <option value='Barcelona'>Barcelona</option>
+                        <option value='Madrid'>Madrid</option>
+                        <option value='Melilla'>Melilla</option>
+                        <option value='Oviedo'>Oviedo</option>
+                        <option value='Segovia'>Segovia</option>
+                        <option value='Teruel'>Teruel</option>
+                        <option value='Valencia'>Valencia</option>
+                        <option value='Valladolid'>Valladolid</option>
+                        <option value='Vigo'>Vigo</option>
+                        <option value='Zaragoza'>Zaragoza</option>
+                    </select>
+                </div>
+                <button type="submit"><b>Registrar</b></button>
+            </fieldset>
+        </form>
+    </div>
+
+    <a href="/">Volver</a>
+</body>
+</html>

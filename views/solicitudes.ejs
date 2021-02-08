@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <!--
+    <script src="https://unpkg.com/@popperjs/core@^2.0.0"></script>
+    <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/bootstrap-datepicker.js"></script>
+-->
+</head>
+
+<body>
+    <p>Solicitudes pendientes</p>
+    <table>
+        <thead>
+        <tr>
+            <th>OLT</th>
+            <th>central</th>
+            <th>MIGA</th>
+            <th>Agregador</th>
+            <th>DN</th>
+            <th>POP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (integraciones) { %>
+            <% for(var i=0; i<integraciones.length; i++) {%>
+                <% if (integraciones[i].completed === false) { %>
+                    <tr>
+                        <td><%= integraciones[i].OLT%></td>
+                        <td><%= integraciones[i].central %></td>
+                        <td><%= integraciones[i].MIGA  %></td>
+                        <td><%= integraciones[i].agregador %></td>
+                        <td><%= integraciones[i].DN %></td>
+                        <td><%= integraciones[i].POP %></td>
+                    </tr>
+                <% } %>
+            <% } %>
+        <% } %>
+        </tbody>
+    </table>
+
+
+    <a href="/">Volver</a>
+</body>
+</html>
