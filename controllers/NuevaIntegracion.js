@@ -19,20 +19,42 @@ exports.read = async function(patientId) {
 
 exports.create = async function(body) {
 
+    var integraciones =[]
+
+    for(var i=0; i<body.nInteg; i++) {
+        integraciones[i] ={
+            OLT: body.OLT,
+            central: body.central,
+            MIGA: body.MIGA,
+            agregador: body.agregador,
+            DN: body.DN,
+            POP: body.POP,
+            poolesIPv4JZZ: [],
+            poolesIPv4OSP: [],
+            poolIPv6JZZ: "",
+            poolIPv6OSP: "",
+            CGNJZZ: "",
+            CGNOSP: ""
+        }
+    }
+
     var newDoc = new Integracion({
-        OLT: body.OLT,
-        central: body.central,
-        MIGA: body.MIGA,
-        agregador: body.agregador,
-        DN: body.DN,
-        POP: body.POP,
-        poolesIPv4JZZ: [],
-        poolesIPv4OSP: [],
-        poolIPv6JZZ: "",
-        poolIPv6OSP: "",
-        CGNJZZ: "",
-        CGNOSP: "",
-        completed: false
+        solicitante: body.solicitante,
+        completed: false,
+        integraciones:[{
+            OLT: body.OLT,
+            central: body.central,
+            MIGA: body.MIGA,
+            agregador: body.agregador,
+            DN: body.DN,
+            POP: body.POP,
+            poolesIPv4JZZ: [],
+            poolesIPv4OSP: [],
+            poolIPv6JZZ: "",
+            poolIPv6OSP: "",
+            CGNJZZ: "",
+            CGNOSP: ""
+        }]
     });
     let result= await newDoc.save();
     return result;
