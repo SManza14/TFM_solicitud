@@ -19,45 +19,46 @@ exports.read = async function(patientId) {
 
 exports.create = async function(body) {
 
-    var integraciones =[]
+    var integraciones = [];
+    var nInteg = (Object.keys(body).length - 1) / 6;
+    var bodyString = JSON.stringify(body);
+    var bodyArray = bodyString.split(',');
+    console.log(bodyArray);
+    console.log("Número de integraciones: " + nInteg);
 
-    for(var i=0; i<body.nInteg; i++) {
-        integraciones[i] ={
-            OLT: body.OLT,
-            central: body.central,
-            MIGA: body.MIGA,
-            agregador: body.agregador,
-            DN: body.DN,
-            POP: body.POP,
+    for(var j = 0; j<bodyArray.length; j++){
+        bodyArray[j] = bodyArray[j].substring(bodyArray[j].indexOf(":"));
+        bodyArray[j] = bodyArray[j].replace(/[^a-zA-Z ]/g, "");
+    }
+    console.log(bodyArray);
+
+    for(var i = 0; i < nInteg; i++){
+        console.log(bodyArray[i*6 + 1]);
+        singleInteg = {
+            OLT: bodyArray[i*6 + 1],
+            central: bodyArray[i*6 + 2],
+            MIGA: bodyArray[i*6 + 3],
+            agregador: bodyArray[i*6 + 4],
+            DN: bodyArray[i*6 + 5],
+            POP: bodyArray[i*6 + 6],
             poolesIPv4JZZ: [],
             poolesIPv4OSP: [],
             poolIPv6JZZ: "",
             poolIPv6OSP: "",
             CGNJZZ: "",
             CGNOSP: ""
-        }
+        };
+        integraciones.push(singleInteg);
     }
-
+    console.log(integraciones);
     var newDoc = new Integracion({
         solicitante: body.solicitante,
         completed: false,
-        integraciones:[{
-            OLT: body.OLT,
-            central: body.central,
-            MIGA: body.MIGA,
-            agregador: body.agregador,
-            DN: body.DN,
-            POP: body.POP,
-            poolesIPv4JZZ: [],
-            poolesIPv4OSP: [],
-            poolIPv6JZZ: "",
-            poolIPv6OSP: "",
-            CGNJZZ: "",
-            CGNOSP: ""
-        }]
+        integraciones: integraciones
     });
-    let result= await newDoc.save();
-    return result;
+    console.log(newDoc);
+    /**let result= await newDoc.save();
+    return result;**/
 }
 
 exports.update= async function(integracionId, body) {
