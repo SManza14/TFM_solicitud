@@ -28,7 +28,7 @@ exports.create = async function(body) {
 
     for(var j = 0; j<bodyArray.length; j++){
         bodyArray[j] = bodyArray[j].substring(bodyArray[j].indexOf(":"));
-        bodyArray[j] = bodyArray[j].replace(/[^a-zA-Z ]/g, "");
+        bodyArray[j] = bodyArray[j].replace(/[^a-zA-Z0-9 /-]/g, "");
     }
     console.log(bodyArray);
 
@@ -56,9 +56,8 @@ exports.create = async function(body) {
         completed: false,
         integraciones: integraciones
     });
-    console.log(newDoc);
-    /**let result= await newDoc.save();
-    return result;**/
+    let result= await newDoc.save();
+    return result;
 }
 
 exports.update= async function(integracionId, body) {
