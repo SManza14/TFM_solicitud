@@ -54,6 +54,22 @@ app.get('/solicitudes', async (req, res, next) => {
     let integraciones = await IntegracionController.list().catch(e => next(e));
     res.render('solicitudes', {integraciones: integraciones});
 });
+
+app.get('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
+
+    let solicitudToFill = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
+
+    res.render('fillIntegracion', { solicitud: solicitudToFill });
+});
+
+app.post('/solicitudes', async (req, res, next) => {
+    console.log("Hola, he llegado a app");
+    let patient = await IntegracionController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
+    let integraciones = await IntegracionController.list().catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones});
+});
+
+
 /**
 app.post('/patients/filterByCity', async (req, res, next) => {
     let patients = await PatientController.filterPatientsByCity(req.body.city).catch(e => next(e))

@@ -8,20 +8,58 @@ exports.list = async function() {
     }catch (error) {
         console.log(error)
     };
-}
+};
 
-exports.read = async function(patientId) {
-    let result = await Integracion.findById(patientId);
+exports.read = async function(integracionId) {
+    let result = await Integracion.findById(integracionId);
     console.log(result);
     console.log(result.name);
     return result;
-}
+};
 
 exports.create = async function(body) {
 
     var integraciones = [];
-    var nInteg = (Object.keys(body).length - 1) / 6;
-    var bodyString = JSON.stringify(body);
+    var nInteg;
+    if (body.OLT === body.OLT.toString()){
+        singleInteg = {
+            OLT: body.OLT,
+            central: body.central,
+            MIGA: body.MIGA,
+            agregador: body.agregador,
+            DN: body.DN,
+            POP: body.POP,
+            poolesIPv4JZZ: [],
+            poolesIPv4OSP: [],
+            poolIPv6JZZ: "",
+            poolIPv6OSP: "",
+            CGNJZZ: "",
+            CGNOSP: ""
+        };
+        console.log(singleInteg);
+        integraciones.push(singleInteg);
+    } else {
+        nInteg = body.OLT.length;
+        for(var i = 0; i < nInteg; i++){
+            singleInteg = {
+                OLT: body.OLT[i],
+                central: body.central[i],
+                MIGA: body.MIGA[i],
+                agregador: body.agregador[i],
+                DN: body.DN[i],
+                POP: body.POP[i],
+                poolesIPv4JZZ: [],
+                poolesIPv4OSP: [],
+                poolIPv6JZZ: "",
+                poolIPv6OSP: "",
+                CGNJZZ: "",
+                CGNOSP: ""
+            };
+            console.log(singleInteg)
+            integraciones.push(singleInteg);
+        }
+    }
+    /*var bodyString = JSON.stringify(body);
     var bodyArray = bodyString.split(',');
     console.log(bodyArray);
     console.log("Número de integraciones: " + nInteg);
@@ -30,35 +68,17 @@ exports.create = async function(body) {
         bodyArray[j] = bodyArray[j].substring(bodyArray[j].indexOf(":"));
         bodyArray[j] = bodyArray[j].replace(/[^a-zA-Z0-9 /-]/g, "");
     }
-    console.log(bodyArray);
+    console.log(bodyArray);*/
 
-    for(var i = 0; i < nInteg; i++){
-        console.log(bodyArray[i*6 + 1]);
-        singleInteg = {
-            OLT: bodyArray[i*6 + 1],
-            central: bodyArray[i*6 + 2],
-            MIGA: bodyArray[i*6 + 3],
-            agregador: bodyArray[i*6 + 4],
-            DN: bodyArray[i*6 + 5],
-            POP: bodyArray[i*6 + 6],
-            poolesIPv4JZZ: [],
-            poolesIPv4OSP: [],
-            poolIPv6JZZ: "",
-            poolIPv6OSP: "",
-            CGNJZZ: "",
-            CGNOSP: ""
-        };
-        integraciones.push(singleInteg);
-    }
-    console.log(integraciones);
     var newDoc = new Integracion({
         solicitante: body.solicitante,
         completed: false,
+        dateId: "",
         integraciones: integraciones
     });
     let result= await newDoc.save();
     return result;
-}
+};
 
 exports.update= async function(integracionId, body) {
     let result= await Integracion.findOneAndUpdate({_id: integracionId},
@@ -76,12 +96,19 @@ exports.delete = async function(integracionId) {
     return result;
 }
 
-exports.addPools = async function (patientId, medicalRecord) {
-
-    let result= await Integracion.findOneAndUpdate({_id: patientId},
-        {$push: {medicalHistory: [{
-                    specialist: medicalRecord.specialist,
-                    diagnosis: medicalRecord.diagnosis,
-                    date: medicalRecord.date}]}}, {new: true});
+exports.addPools = async function (integracionId, body) {
+    console.log(body);
+    let result = await Integracion.findById(integracionId);
+    console.log(result);
+    /*
+    var integraciones = [];
+    var nInteg;
+    if (body.RelayJZZ === body.RelayJZZ.toString()){
+        let result= await Integracion.findOneAndUpdate({_id: integracionId},
+            {$push: {integraciones: [{
+                        specialist: body.specialist,
+                        diagnosis: medicalRecord.diagnosis,
+                        date: medicalRecord.date}]}}, {new: true});
+    };*/
     return result;
-}
+};

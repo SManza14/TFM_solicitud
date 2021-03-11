@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const IntegracionSchema = Schema({
     solicitante: String,
+    dateId: String,
     completed: Boolean,
     integraciones: [{
         OLT: String,
