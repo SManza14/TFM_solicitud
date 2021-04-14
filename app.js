@@ -63,8 +63,6 @@ app.get('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
 });
 
 app.post('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
-    console.log("Hola, he llegado a app");
-    console.log(req.params);
     let solicitud = await IntegracionController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
     let integraciones = await IntegracionController.list().catch(e => next(e));
     res.render('solicitudes', {integraciones: integraciones});

@@ -98,8 +98,11 @@ exports.delete = async function(integracionId) {
 
 exports.addPools = async function (integracionId, body) {
     console.log(body);
-    let result = await Integracion.findById(integracionId);
-    console.log(result);
+    let result= await Integracion.findOneAndUpdate({_id: integracionId},
+        {$push: {
+            completed: body.completed, //Convertir este String en un Boolean!!!!!!!!!!!!!!
+                dateId: body.idSolicitud
+        }});
     /*
     var integraciones = [];
     var nInteg;
