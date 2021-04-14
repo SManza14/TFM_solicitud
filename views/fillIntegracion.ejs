@@ -48,13 +48,14 @@
     </nav>
 </header>
 <h2>Rellenar integración</h2>
+<p>Id del objeto en Mongo: <%= id_sol %></p>
 <p>Solicitante: <%= solicitud.solicitante %></p>
 
 <div>
-    <form method="POST" action="/solicitudes">
+    <form method="POST" action="/solicitudes/<%= id_sol %>/fillIntegracion">
         <fieldset>
             <div>
-                <label for="solicitante">Id de la solicitud:   </label><input type="text" name="solicitante" placeholder="Introduzca el ID">
+                <label for="idSolicitud">Id de la solicitud:   </label><input type="text" name="idSolicitud" placeholder="Introduzca el ID">
                 <br><label for="completed"> ¿Terminada?</label>
                 <input type="checkbox" id="completed" name="completed" value=True>
             </div>
@@ -117,7 +118,7 @@
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>Pooles Jazztel</th>
-                                        <th>Pooles LI</th>
+                                        <th>Pool LI</th>
                                         <th>Relay</th>
                                         <th>Pool IPv6</th>
                                         <th>Pool CGNAT</th>
