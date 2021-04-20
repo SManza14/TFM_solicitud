@@ -13,7 +13,7 @@ exports.list = async function() {
 exports.read = async function(integracionId) {
     let result = await Integracion.findById(integracionId);
     console.log(result);
-    console.log(result.name);
+    console.log(result.solicitante);
     return result;
 };
 
@@ -23,6 +23,7 @@ exports.create = async function(body) {
     var nInteg;
     if (body.OLT === body.OLT.toString()){
         singleInteg = {
+            id: 0,
             OLT: body.OLT,
             central: body.central,
             MIGA: body.MIGA,
@@ -30,7 +31,11 @@ exports.create = async function(body) {
             DN: body.DN,
             POP: body.POP,
             poolesIPv4JZZ: [],
-            poolesIPv4OSP: [],
+            poolLIJZZ: "",
+            RelayJZZ: "",
+            poolesDinOSP: [],
+            poolesSuspOSP: [],
+            poolesFijOSP: [],
             poolIPv6JZZ: "",
             poolIPv6OSP: "",
             CGNJZZ: "",
@@ -42,6 +47,7 @@ exports.create = async function(body) {
         nInteg = body.OLT.length;
         for(var i = 0; i < nInteg; i++){
             singleInteg = {
+                id: i,
                 OLT: body.OLT[i],
                 central: body.central[i],
                 MIGA: body.MIGA[i],
@@ -49,7 +55,11 @@ exports.create = async function(body) {
                 DN: body.DN[i],
                 POP: body.POP[i],
                 poolesIPv4JZZ: [],
-                poolesIPv4OSP: [],
+                poolLIJZZ: "",
+                RelayJZZ: "",
+                poolesDinOSP: [],
+                poolesSuspOSP: [],
+                poolesFijOSP: [],
                 poolIPv6JZZ: "",
                 poolIPv6OSP: "",
                 CGNJZZ: "",
@@ -98,20 +108,72 @@ exports.delete = async function(integracionId) {
 
 exports.addPools = async function (integracionId, body) {
     console.log(body);
-    let result= await Integracion.findOneAndUpdate({_id: integracionId},
-        {$push: {
-            completed: body.completed, //Convertir este String en un Boolean!!!!!!!!!!!!!!
-                dateId: body.idSolicitud
-        }});
-    /*
-    var integraciones = [];
-    var nInteg;
-    if (body.RelayJZZ === body.RelayJZZ.toString()){
+    let completado = false;
+    if (body.completed === "True"){
+        completado = true;
+    }
+    let nInteg;
+    let solicitud = await Integracion.findById(integracionId);
+    console.log(solicitud.integraciones);
+    nInteg = solicitud.integraciones.length;
+    console.log ("el número de integraciones es de " + nInteg);
+    console.log(body);
+    if (nInteg === 1){
         let result= await Integracion.findOneAndUpdate({_id: integracionId},
-            {$push: {integraciones: [{
-                        specialist: body.specialist,
-                        diagnosis: medicalRecord.diagnosis,
-                        date: medicalRecord.date}]}}, {new: true});
-    };*/
-    return result;
+            { $set: {
+                    //completed: completado,
+                    dateId: body.idSolicitud,
+                    'integraciones.0.poolesIPv4JZZ': body.PoolJZZ0,
+                    'integraciones.0.poolLIJZZ': body.PoolLIJZZ0,
+                    'integraciones.0.RelayJZZ': body.RelayJZZ0,
+                    'integraciones.0.poolesDinOSP': body.PoolDinOSP0,
+                    'integraciones.0.poolesSuspOSP': body.PoolSuspOSP0,
+                    'integraciones.0.poolesFijOSP': body.PoolFijOSP0,
+                    'integraciones.0.poolIPv6JZZ': body.PoolIPv6JZZ0,
+                    'integraciones.0.poolIPv6OSP': body.PoolIPv6OSP0,
+                    'integraciones.0.CGNJZZ': body.PoolCGNJZZ0,
+                    'integraciones.0.CGNOSP': body.PoolCGNOSP0
+
+                }});
+        return result;
+    } else {
+        let integraciones = [];
+        for (let i = 0; i< nInteg; i++){
+            integraciones.push({
+                poolesDinOSP:body[i*10+2],
+                poolesSuspOSP:body[i*10+3],
+                poolesFijOSP:body[i*10+4],
+                poolIPv6OSP:body[i*10+5],
+                CGNOSP:body[i*10+6],
+                poolesIPv4JZZ:body[i*10+7],
+                poolLIJZZ:body[i*10+8],
+                RelayJZZ:body[i*10+9],
+                poolIPv6JZZ:body[i*10+10],
+                CGNJZZ:body[i*10+11],
+                });
+            console.log(integraciones[i]);
+//            let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.id': i},
+//                { $set: {
+//                    'integraciones.$': integraciones[i]
+//                    }});
+//            return result;
+        }
+//        let result= await Integracion.findOneAndUpdate({_id: integracionId},
+//            { $set: {
+//                    //completed: completado,
+//                    dateId: body.idSolicitud,
+//                    'integraciones.0.poolesIPv4JZZ': body.PoolJZZ0,
+//                    'integraciones.0.poolLIJZZ': body.PoolLIJZZ0,
+//                    'integraciones.0.RelayJZZ': body.RelayJZZ0,
+//                    'integraciones.0.poolesDinOSP': body.PoolDinOSP0,
+//                    'integraciones.0.poolesSuspOSP': body.PoolSuspOSP0,
+//                    'integraciones.0.poolesFijOSP': body.PoolFijOSP0,
+//                    'integraciones.0.poolIPv6JZZ': body.PoolIPv6JZZ0,
+//                    'integraciones.0.poolIPv6OSP': body.PoolIPv6OSP0,
+//                    'integraciones.0.CGNJZZ': body.PoolCGNJZZ0,
+//                    'integraciones.0.CGNOSP': body.PoolCGNOSP0
+//                }});
+//        return;
+    }
+
 };
