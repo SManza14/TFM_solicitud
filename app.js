@@ -9,7 +9,7 @@ const app = express();
 const mongoose = require('mongoose');
 (async () => {
     try {
-        await mongoose.connect('mongodb://localhost/solicitudes_db',{ useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect('mongodb://localhost/solicitudes_db',{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
         console.log('Connected to Mongo!')
     } catch (err) {
         console.log('Error connecting to Database: ' + err)
@@ -68,6 +68,16 @@ app.post('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => 
     res.render('solicitudes', {integraciones: integraciones});
 });
 
+app.get('/delete/:solicitudId', async (req, res, next) => {
+    let deleted = await IntegracionController.delete(req.params.solicitudId).catch(e => next(e));
+    let integraciones = await IntegracionController.list().catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones});
+});
+
+app.get('/detail/:solicitudId', async (req, res, next) => {
+    let solicitud = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
+    res.render('detail', { solicitud: solicitud, id_sol: req.params.solicitudId });
+});
 
 /**
 app.post('/patients/filterByCity', async (req, res, next) => {

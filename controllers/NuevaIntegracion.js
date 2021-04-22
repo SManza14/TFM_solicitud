@@ -138,42 +138,40 @@ exports.addPools = async function (integracionId, body) {
         return result;
     } else {
         let integraciones = [];
+        let bodyvalues = Object.values(body);
+        console.log(bodyvalues);
+        let prev= await Integracion.findById(integracionId);
+		console.log(prev);
         for (let i = 0; i< nInteg; i++){
             integraciones.push({
-                poolesDinOSP:body[i*10+2],
-                poolesSuspOSP:body[i*10+3],
-                poolesFijOSP:body[i*10+4],
-                poolIPv6OSP:body[i*10+5],
-                CGNOSP:body[i*10+6],
-                poolesIPv4JZZ:body[i*10+7],
-                poolLIJZZ:body[i*10+8],
-                RelayJZZ:body[i*10+9],
-                poolIPv6JZZ:body[i*10+10],
-                CGNJZZ:body[i*10+11],
+                OLT: prev.integraciones[i].OLT,
+                central: prev.integraciones[i].central,
+                MIGA: prev.integraciones[i].MIGA,
+                agregador:prev.integraciones[i].agregador,
+                DN: prev.integraciones[i].DN,
+                POP: prev.integraciones[i].POP,
+                poolesDinOSP: bodyvalues[i*10+2],
+                poolesSuspOSP: bodyvalues[i*10+3],
+                poolesFijOSP: bodyvalues[i*10+4],
+                poolIPv6OSP: bodyvalues[i*10+5],
+                CGNOSP: bodyvalues[i*10+6],
+                poolesIPv4JZZ: bodyvalues[i*10+7],
+                poolLIJZZ: bodyvalues[i*10+8],
+                RelayJZZ: bodyvalues[i*10+9],
+                poolIPv6JZZ: bodyvalues[i*10+10],
+                CGNJZZ: bodyvalues[i*10+11]
                 });
             console.log(integraciones[i]);
-//            let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.id': i},
-//                { $set: {
-//                    'integraciones.$': integraciones[i]
-//                    }});
-//            return result;
+            console.log("el id de mi solicitud es " + integracionId)
+            let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.id': i},
+                { $set: {
+                    //completed: completado,
+                    dateId: body.idSolicitud,
+                    'integraciones.$': integraciones[i]
+                    }}
+            );
         }
-//        let result= await Integracion.findOneAndUpdate({_id: integracionId},
-//            { $set: {
-//                    //completed: completado,
-//                    dateId: body.idSolicitud,
-//                    'integraciones.0.poolesIPv4JZZ': body.PoolJZZ0,
-//                    'integraciones.0.poolLIJZZ': body.PoolLIJZZ0,
-//                    'integraciones.0.RelayJZZ': body.RelayJZZ0,
-//                    'integraciones.0.poolesDinOSP': body.PoolDinOSP0,
-//                    'integraciones.0.poolesSuspOSP': body.PoolSuspOSP0,
-//                    'integraciones.0.poolesFijOSP': body.PoolFijOSP0,
-//                    'integraciones.0.poolIPv6JZZ': body.PoolIPv6JZZ0,
-//                    'integraciones.0.poolIPv6OSP': body.PoolIPv6OSP0,
-//                    'integraciones.0.CGNJZZ': body.PoolCGNJZZ0,
-//                    'integraciones.0.CGNOSP': body.PoolCGNOSP0
-//                }});
-//        return;
+        return console.log("Ojala salga bien.");
     }
 
 };

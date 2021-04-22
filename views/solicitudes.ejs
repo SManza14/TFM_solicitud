@@ -53,34 +53,38 @@
         <% for(var i=0; i<integraciones.length; i++) {%>
             <% if (integraciones[i].completed === false) { %>
     <div id="solicitud">
-        <p>Solicitante : <%= integraciones[i].solicitante %>  <a href="/solicitudes/<%= integraciones[i]._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a></p>
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="thead-dark">
-            <tr>
-                <th>OLT</th>
-                <th>central</th>
-                <th>MIGA</th>
-                <th>Agregador</th>
-                <th>DN</th>
-                <th>POP</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% if (integraciones[i].integraciones.length > 0) { %>
-                <% for(var j=0; j<integraciones[i].integraciones.length; j++) {%>
-                        <tr>
-                            <td><%= integraciones[i].integraciones[j].OLT%></td>
-                            <td><%= integraciones[i].integraciones[j].central %></td>
-                            <td><%= integraciones[i].integraciones[j].MIGA  %></td>
-                            <td><%= integraciones[i].integraciones[j].agregador %></td>
-                            <td><%= integraciones[i].integraciones[j].DN %></td>
-                            <td><%= integraciones[i].integraciones[j].POP %></td>
-                        </tr>
+        <p>Solicitante : <%= integraciones[i].solicitante %>  <a href="/solicitudes/<%= integraciones[i]._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a>
+            <a href="/delete/<%= integraciones[i]._id%>"><button class="btn btn-danger">Eliminar</button></a>
+        </p>
+        <a href="/detail/<%= integraciones[i]._id%>">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>OLT</th>
+                    <th>central</th>
+                    <th>MIGA</th>
+                    <th>Agregador</th>
+                    <th>DN</th>
+                    <th>POP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (integraciones[i].integraciones.length > 0) { %>
+                    <% for(var j=0; j<integraciones[i].integraciones.length; j++) {%>
+                            <tr>
+                                <td><%= integraciones[i].integraciones[j].OLT%></td>
+                                <td><%= integraciones[i].integraciones[j].central %></td>
+                                <td><%= integraciones[i].integraciones[j].MIGA  %></td>
+                                <td><%= integraciones[i].integraciones[j].agregador %></td>
+                                <td><%= integraciones[i].integraciones[j].DN %></td>
+                                <td><%= integraciones[i].integraciones[j].POP %></td>
+                            </tr>
 
+                    <% } %>
                 <% } %>
-            <% } %>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </a>
     </div>
     <% } %>
     <% } %>
