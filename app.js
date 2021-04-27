@@ -40,11 +40,11 @@ app.get('/nuevaIntegracion', (req, res, next) => {
 app.get('/nuevaMigracion', (req, res, next) => {
     res.render('nuevaMigracion');
 });
-/**
-app.get('/solicitudes', (req, res, next) => {
-    res.render('solicitudes');
+
+app.get('/search', (req, res, next) => {
+    res.render('search');
 });
-**/
+
  app.post('/nuevaIntegracion', async (req, res, next) => {
     await IntegracionController.create(req.body).catch(e => next(e));
     res.redirect('/nuevaIntegracion');

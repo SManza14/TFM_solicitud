@@ -16,83 +16,53 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-            <a class="navbar-brand" href="/"><img src="/public/img/logo.png" alt="Axians"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/solicitudes">Solicitudes pendientes</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                            Nueva solicitud
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <li><a class="dropdown-item" href="/nuevaIntegracion">Integración</a></li>
-                            <li><a class="dropdown-item" href="/nuevaMigracion">Migración</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </nav>
-    </header>
-    <p>Solicitudes pendientes</p>
-    <h2>Integraciones pendientes</h2>
-    <% if (integraciones) { %>
-        <% for(var i=0; i<integraciones.length; i++) {%>
-            <% if (integraciones[i].completed === false) { %>
-    <div id="solicitud">
-        <p>Solicitante : <%= integraciones[i].solicitante %>  <a href="/solicitudes/<%= integraciones[i]._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a>
-            <a href="/delete/<%= integraciones[i]._id%>"><button class="btn btn-danger">Eliminar</button></a>
-        </p>
-        <a href="/detail/<%= integraciones[i]._id%>">
-            <table class="table table-striped table-bordered table-hover">
-                <thead class="thead-dark">
-                <tr>
-                    <th>OLT</th>
-                    <th>central</th>
-                    <th>MIGA</th>
-                    <th>Agregador</th>
-                    <th>DN</th>
-                    <th>POP</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% if (integraciones[i].integraciones.length > 0) { %>
-                    <% for(var j=0; j<integraciones[i].integraciones.length; j++) {%>
-                            <tr>
-                                <td><%= integraciones[i].integraciones[j].OLT%></td>
-                                <td><%= integraciones[i].integraciones[j].central %></td>
-                                <td><%= integraciones[i].integraciones[j].MIGA  %></td>
-                                <td><%= integraciones[i].integraciones[j].agregador %></td>
-                                <td><%= integraciones[i].integraciones[j].DN %></td>
-                                <td><%= integraciones[i].integraciones[j].POP %></td>
-                            </tr>
+<%- include('partials/header.ejs') %>
+<p>Solicitudes pendientes</p>
+<h2>Integraciones pendientes</h2>
+<% if (integraciones) { %>
+    <% for(var i=0; i<integraciones.length; i++) {%>
+        <% if (integraciones[i].completed === false) { %>
+<div id="solicitud">
+    <p>Solicitante : <%= integraciones[i].solicitante %>  <a href="/solicitudes/<%= integraciones[i]._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a>
+        <a href="/delete/<%= integraciones[i]._id%>"><button class="btn btn-danger">Eliminar</button></a>
+    </p>
+    <a href="/detail/<%= integraciones[i]._id%>">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>OLT</th>
+                <th>central</th>
+                <th>MIGA</th>
+                <th>Agregador</th>
+                <th>DN</th>
+                <th>POP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (integraciones[i].integraciones.length > 0) { %>
+                <% for(var j=0; j<integraciones[i].integraciones.length; j++) {%>
+                        <tr>
+                            <td><%= integraciones[i].integraciones[j].OLT%></td>
+                            <td><%= integraciones[i].integraciones[j].central %></td>
+                            <td><%= integraciones[i].integraciones[j].MIGA  %></td>
+                            <td><%= integraciones[i].integraciones[j].agregador %></td>
+                            <td><%= integraciones[i].integraciones[j].DN %></td>
+                            <td><%= integraciones[i].integraciones[j].POP %></td>
+                        </tr>
 
-                    <% } %>
                 <% } %>
-                </tbody>
-            </table>
-        </a>
-    </div>
-    <% } %>
-    <% } %>
-    <% } %>
+            <% } %>
+            </tbody>
+        </table>
+    </a>
+</div>
+<% } %>
+<% } %>
+<% } %>
 
-    <h2>Migraciones pendientes</h2>
+<h2>Migraciones pendientes</h2>
 
-    <a href="/"><button class="btn btn-primary">Volver</button></a>
+<%- include('partials/footer.ejs') %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
             crossorigin="anonymous"></script>
