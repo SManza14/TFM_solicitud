@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Nueva Integración</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"></script>.
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<%- include('partials/header.ejs') %>
+    <p>Nueva integración</p>
+
+    <div>
+        <form method="POST" action="/nuevaIntegracion">
+            <fieldset>
+                <legend>Nueva Integración</legend>
+                <div>
+                    <label>Solicitante</label><input type="text" name="solicitante" placeholder="Introduzca su nombre">
+                </div>
+                <div></div>
+
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>OLT</th>
+                        <th>central</th>
+                        <th>MIGA</th>
+                        <th>Agregador</th>
+                        <th>DN</th>
+                        <th>POP</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" name="OLT" placeholder="OLT"></td>
+                        <td><input type="text" name="central" placeholder="Central"></td>
+                        <td><input type="text" name="MIGA" placeholder="MIGA"></td>
+                        <td><input type="text" name="agregador" placeholder="Agregador"></td>
+                        <td><input type="text" name="DN" placeholder="Equipos de distribución"></td>
+                        <td>
+                            <select name="POP">
+                                <option value='ACERO'>ACERO</option>
+                                <option value='ALBACETE'>ALBACETE</option>
+                                <option value='ALICANTE'>ALICANTE</option>
+                                <option value='ALICANTE2'>ALICANTE2</option>
+                                <option value='ALMERIA'>ALMERIA</option>
+                                <option value='AVILA'>AVILA</option>
+                                <option value='BADAJOZ'>BADAJOZ</option>
+                                <option value='BADAJOZ2'>BADAJOZ2</option>
+                                <option value='BILBAO'>BILBAO2</option>
+                                <option value='BURGOS'>BURGOS</option>
+                                <option value='CACERES'>CACERES</option>
+                                <option value='CAMARILLO1'>CAMARILLO1</option>
+                                <option value='CAMARILLO2'>CAMARILLO2</option>
+                                <option value='SANTANDER'>SANTANDER</option>
+                                <option value='CASTELLON'>CASTELLON</option>
+                                <option value='CAVANILLES'>CAVANILLES</option>
+                                <option value='CIUDADREAL'>CIUDADREAL</option>
+                                <option value='COLBRAND'>COLBRAND</option>
+                                <option value='CORDOBA'>CORDOBA</option>
+                                <option value='ECHEGARAY'>ECHEGARAY</option>
+                                <option value='GERONA'>GERONA</option>
+                                <option value='GERONA2'>GERONA2</option>
+                                <option value='GIJON'>GIJON</option>
+                                <option value='GRANADA'>GRANADA</option>
+                                <option value='GRANADA2'>GRANADA2</option>
+                                <option value='GRANCANARIA'>GRANCANARIA</option>
+                                <option value='GUADALAJARA'>GUADALAJARA</option>
+                                <option value='GUADALAJARA2'>GUADALAJARA2</option>
+                                <option value='HISPITALET'>HOSPITALET</option>
+                                <option value='HUESCA'>HUESCA</option>
+                                <option value='IBIZA'>IBIZA</option>
+                                <option value='INDUSTRIA'>INDUSTRIA</option>
+                                <option value='JAEN'>JAEN</option>
+                                <option value='JEREZ'>JEREZ</option>
+                                <option value='LARIOJA'>LARIOJA</option>
+                                <option value='LACORUNA'>LACORUNA</option>
+                                <option value='LEON'>LEON</option>
+                                <option value='LERIDA'>LERIDA</option>
+                                <option value='LUGO'>LUGO</option>
+                                <option value='MALAGA'>MALAGA</option>
+                                <option value='MALAGA2'>MALAGA2</option>
+                                <option value='MENESES1'>MENESES1</option>
+                                <option value='MENESES3'>MENESES3</option>
+                                <option value='MURCIA'>MURCIA</option>
+                                <option value='MURCIA2'>MURCIA2</option>
+                                <option value='OVIEDO'>OVIEDO</option>
+                                <option value='ORENSE'>ORENSE</option>
+                                <option value='PALENCIA'>PALENCIA</option>
+                                <option value='PALMA'>PALMA</option>
+                                <option value='PALMA2'>PALMA2</option>
+                                <option value='PAMPLONA'>PAMPLONA</option>
+                                <option value='SALAMANCA'>SALAMANCA</option>
+                                <option value='SALAMANCA2'>SALAMANCA2</option>
+                                <option value='SANSEBASTIAN'>SANSEBASTIAN</option>
+                                <option value='SANTANDER2'>SANTANDER2</option>
+                                <option value='SEVILLA'>SEVILLA</option>
+                                <option value='SEVILLA2'>SEVILLA2</option>
+                                <option value='TARRAGONA'>TARRAGONA</option>
+                                <option value='TENERIFE'>TENERIFE</option>
+                                <option value='TOLEDO'>TOLEDO</option>
+                                <option value='VALENCIA'>VALENCIA</option>
+                                <option value='VALENCIA3'>VALENCIA3</option>
+                                <option value='VALENCIA4'>VALENCIA4</option>
+                                <option value='VALLADOLID'>VALLADOLID</option>
+                                <option value='VALLADOLID2'>VALLADOLID2</option>
+                                <option value='VIGO'>VIGO</option>
+                                <option value='VITORIA'>VITORIA</option>
+                                <option value='ZAMORA'>ZAMORA</option>
+                                <option value='ZARAGOZA'>ZARAGOZA</option>
+                                <option value='ZARAGOZA2'>ZARAGOZA2</option>
+                                <option value='ZONAFRANCA1'>ZONAFRANCA1</option>
+                                <option value='ZONAFRANCA2'>ZONAFRANCA2</option>
+                                <option value='PALOS'>PALOS</option>
+                                <option value='BOTANICA'>BOTANICA</option>
+                                <option value='LACORUNA2'>LACORUNA2</option>
+                                <option value='JAEN2'>JAEN2</option>
+                                <option value='MALAGA3'>MALAGA3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tbody id="newRow"></tbody>
+                    </tbody>
+                </table>
+
+                <button id="addRow" type="button" class="btn btn-info">+</button>
+                <div></div>
+                <button class="btn btn-success" type="submit"><b>Registrar</b></button>
+            </fieldset>
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        var nInteg = 1
+        // add row
+        $("#addRow").click(function () {
+            nInteg ++;
+            var html = '';
+
+            html +='<tr id="nextRow"">';
+            html +='<td><input type="text" name="OLT" placeholder="OLT"></td>';
+            html +='<td><input type="text" name="central" placeholder="Central"></td>';
+            html +='<td><input type="text" name="MIGA" placeholder="MIGA"></td>';
+            html +='<td><input type="text" name="agregador" placeholder="Agregador"></td>';
+            html +='<td><input type="text" name="DN" placeholder="Equipos de distribución"></td>';
+            html +='<td>';
+            html +='<select name="POP">';
+            html +='<option value="ACERO">ACERO</option>';
+            html +='<option value="ALBACETE">ALBACETE</option>';
+            html +='<option value="ALICANTE">ALICANTE</option>';
+            html +='<option value="ALICANTE2">ALICANTE2</option>';
+            html +='<option value="ALMERIA">ALMERIA</option>';
+            html +='<option value="AVILA">AVILA</option>';
+            html +='<option value="BADAJOZ">BADAJOZ</option>';
+            html +='<option value="BADAJOZ2">BADAJOZ2</option>';
+            html +='<option value="BILBAO">BILBAO2</option>';
+            html +='<option value="BURGOS">BURGOS</option>';
+            html +='<option value="CACERES">CACERES</option>';
+            html +='<option value="CAMARILLO1">CAMARILLO1</option>';
+            html +='<option value="CAMARILLO2">CAMARILLO2</option>';
+            html +='<option value="SANTANDER">SANTANDER</option>';
+            html +='<option value="CASTELLON">CASTELLON</option>';
+            html +='<option value="CAVANILLES">CAVANILLES</option>';
+            html +='<option value="CIUDADREAL">CIUDADREAL</option>';
+            html +='<option value="COLBRAND">COLBRAND</option>';
+            html +='<option value="CORDOBA">CORDOBA</option>';
+            html +='<option value="ECHEGARAY">ECHEGARAY</option>';
+            html +='<option value="GERONA">GERONA</option>';
+            html +='<option value="GERONA2">GERONA2</option>';
+            html +='<option value="GIJON">GIJON</option>';
+            html +='<option value="GRANADA">GRANADA</option>';
+            html +='<option value="GRANADA2">GRANADA2</option>';
+            html +='<option value="GRANCANARIA">GRANCANARIA</option>';
+            html +='<option value="GUADALAJARA">GUADALAJARA</option>';
+            html +='<option value="GUADALAJARA2">GUADALAJARA2</option>';'';
+            html +='<option value="HISPITALET">HOSPITALET</option>';
+            html +='<option value="HUESCA">HUESCA</option>';
+            html +='<option value="IBIZA">IBIZA</option>';
+            html +='<option value="INDUSTRIA">INDUSTRIA</option>';
+            html +='<option value="JAEN">JAEN</option>';
+            html +='<option value="JEREZ">JEREZ</option>';
+            html +='<option value="LARIOJA">LARIOJA</option>';
+            html +='<option value="LACORUNA">LACORUNA</option>';
+            html +='<option value="LEON">LEON</option>';
+            html +='<option value="LERIDA">LERIDA</option>';
+            html +='<option value="LUGO">LUGO</option>';
+            html +='<option value="MALAGA">MALAGA</option>';
+            html +='<option value="MALAGA2">MALAGA2</option>';
+            html +='<option value="MENESES1">MENESES1</option>';
+            html +='<option value="MENESES3">MENESES3</option>';
+            html +='<option value="MURCIA">MURCIA</option>';
+            html +='<option value="MURCIA2">MURCIA2</option>';
+            html +='<option value="OVIEDO">OVIEDO</option>';
+            html +='<option value="ORENSE">ORENSE</option>';
+            html +='<option value="PALENCIA">PALENCIA</option>';
+            html +='<option value="PALMA">PALMA</option>';
+            html +='<option value="PALMA2">PALMA2</option>';
+            html +='<option value="PAMPLONA">PAMPLONA</option>';
+            html +='<option value="SALAMANCA">SALAMANCA</option>';
+            html +='<option value="SALAMANCA2">SALAMANCA2</option>';
+            html +='<option value="SANSEBASTIAN">SANSEBASTIAN</option>';
+            html +='<option value="SANTANDER2">SANTANDER2</option>';
+            html +='<option value="SEVILLA">SEVILLA</option>';
+            html +='<option value="SEVILLA2">SEVILLA2</option>';
+            html +='<option value="TARRAGONA">TARRAGONA</option>';
+            html +='<option value="TENERIFE">TENERIFE</option>';
+            html +='<option value="TOLEDO">TOLEDO</option>';
+            html +='<option value="VALENCIA">VALENCIA</option>';
+            html +='<option value="VALENCIA3">VALENCIA3</option>';
+            html +='<option value="VALENCIA4">VALENCIA4</option>';
+            html +='<option value="VALLADOLID">VALLADOLID</option>';
+            html +='<option value="VALLADOLID2">VALLADOLID2</option>';
+            html +='<option value="VIGO">VIGO</option>';
+            html +='<option value="VITORIA">VITORIA</option>';
+            html +='<option value="ZAMORA">ZAMORA</option>';
+            html +='<option value="ZARAGOZA">ZARAGOZA</option>';
+            html +='<option value="ZARAGOZA2">ZARAGOZA2</option>';
+            html +='<option value="ZONAFRANCA1">ZONAFRANCA1</option>';
+            html +='<option value="ZONAFRANCA2">ZONAFRANCA2</option>';
+            html +='<option value="PALOS">PALOS</option>';
+            html +='<option value="BOTANICA">BOTANICA</option>';
+            html +='<option value="LACORUNA2">LACORUNA2</option>';
+            html +='<option value="JAEN2">JAEN2</option>';
+            html +='<option value="MALAGA3">MALAGA3</option>';
+            html +='</select>';
+            html +='</td>';
+            html +='<td><button id="removeRow" type="button" class="btn btn-danger">Remove</button></td>';
+            html +='</tr>';
+
+
+            $('#newRow').append(html);
+        });
+
+        // remove row
+        $(document).on('click', '#removeRow', function () {
+            nInteg --;
+            $(this).closest('#nextRow').remove();
+        });
+    </script>
+
+<%- include('partials/footer.ejs') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+</body>
+</html>
