@@ -69,16 +69,6 @@ exports.create = async function(body) {
             integraciones.push(singleInteg);
         }
     }
-    /*var bodyString = JSON.stringify(body);
-    var bodyArray = bodyString.split(',');
-    console.log(bodyArray);
-    console.log("Número de integraciones: " + nInteg);
-
-    for(var j = 0; j<bodyArray.length; j++){
-        bodyArray[j] = bodyArray[j].substring(bodyArray[j].indexOf(":"));
-        bodyArray[j] = bodyArray[j].replace(/[^a-zA-Z0-9 /-]/g, "");
-    }
-    console.log(bodyArray);*/
 
     var newDoc = new Integracion({
         solicitante: body.solicitante,
@@ -174,4 +164,33 @@ exports.addPools = async function (integracionId, body) {
         return console.log("Ojala salga bien.");
     }
 
+};
+
+exports.search = async function (body) {
+    console.log(body);
+    if (body.categoria === "id"){
+        let result = await Integracion.find({dateId: body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "solicitante"){
+        let result = await Integracion.find({solicitante: body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "olt"){
+        let result = await Integracion.find({"integraciones.OLT": body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "agregador"){
+        let result = await Integracion.find({"integraciones.agregador": body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "pool") {
+        let result = "hola";
+        console.log("Aún estoy en proceso de Construcción");
+        return result;
+    }
 };

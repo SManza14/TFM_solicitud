@@ -56,9 +56,7 @@ app.get('/solicitudes', async (req, res, next) => {
 });
 
 app.get('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
-
     let solicitudToFill = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
-
     res.render('fillIntegracion', { solicitud: solicitudToFill, id_sol: req.params.solicitudId });
 });
 
@@ -77,6 +75,12 @@ app.get('/delete/:solicitudId', async (req, res, next) => {
 app.get('/detail/:solicitudId', async (req, res, next) => {
     let solicitud = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
     res.render('detail', { solicitud: solicitud, id_sol: req.params.solicitudId });
+});
+
+
+app.post('/solicitudes/result', async (req, res, next) => {
+    let integraciones = await IntegracionController.search(req.body).catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones});
 });
 
 /**
