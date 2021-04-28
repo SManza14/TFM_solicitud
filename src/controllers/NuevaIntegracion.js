@@ -1,9 +1,19 @@
 // Cargamos los modelos para usarlos posteriormente
 const Integracion = require('../model/Integracion');
+const Migracion = require('../model/Migracion');
 
-exports.list = async function() {
+exports.listInt = async function() {
     try{
-        let result = await Integracion.find();
+        let result = await Integracion.find({completed: false});
+        return result;
+    }catch (error) {
+        console.log(error)
+    };
+};
+
+exports.listMig = async function() {
+    try{
+        let result = await Migracion.find({completed: false});
         return result;
     }catch (error) {
         console.log(error)
@@ -189,8 +199,18 @@ exports.search = async function (body) {
         return result;
     }
     else if (body.categoria === "pool") {
-        let result = "hola";
-        console.log("Aún estoy en proceso de Construcción");
+        let result = await Integracion.find({ $or:[
+                {"integraciones.poolLIJZZ": body.infor},
+                {"integraciones.RelayJZZ": body.infor},
+                {"integraciones.poolesIPv4JZZ": body.infor},
+                {"integraciones.poolesDinOSP": body.infor},
+                {"integraciones.poolesSuspOSP": body.infor},
+                {"integraciones.poolesFijOSP": body.infor},
+                {"integraciones.poolIPv6JZZ": body.infor},
+                {"integraciones.poolIPv6OSP": body.infor},
+                {"integraciones.CGNOSP": body.infor},
+                {"integraciones.CGNJZZ": body.infor}
+        ]});
         return result;
     }
 };

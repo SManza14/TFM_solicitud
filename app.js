@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const path = require('path');
-const IntegracionController = require('./src/controllers/NuevaIntegracion');
+const IntMigController = require('./src/controllers/NuevaIntegracion');
 
 const app = express();
 
@@ -46,40 +46,43 @@ app.get('/search', (req, res, next) => {
 });
 
  app.post('/nuevaIntegracion', async (req, res, next) => {
-    await IntegracionController.create(req.body).catch(e => next(e));
+    await IntMigController.create(req.body).catch(e => next(e));
     res.redirect('/nuevaIntegracion');
 });
 
 app.get('/solicitudes', async (req, res, next) => {
-    let integraciones = await IntegracionController.list().catch(e => next(e));
-    res.render('solicitudes', {integraciones: integraciones});
+    let integraciones = await IntMigController.listInt().catch(e => next(e));
+    let migraciones = await IntMigController.listMig().catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
 });
 
 app.get('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
-    let solicitudToFill = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
+    let solicitudToFill = await IntMigController.read(req.params.solicitudId).catch(e => next(e));
     res.render('fillIntegracion', { solicitud: solicitudToFill, id_sol: req.params.solicitudId });
 });
 
 app.post('/solicitudes/:solicitudId/fillIntegracion', async (req, res, next) => {
-    let solicitud = await IntegracionController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
-    let integraciones = await IntegracionController.list().catch(e => next(e));
-    res.render('solicitudes', {integraciones: integraciones});
+    let solicitud = await IntMigController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
+    let integraciones = await IntMigController.listInt().catch(e => next(e));
+    let migraciones = await IntMigController.listMig().catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
 });
 
 app.get('/delete/:solicitudId', async (req, res, next) => {
-    let deleted = await IntegracionController.delete(req.params.solicitudId).catch(e => next(e));
-    let integraciones = await IntegracionController.list().catch(e => next(e));
-    res.render('solicitudes', {integraciones: integraciones});
+    let deleted = await IntMigController.delete(req.params.solicitudId).catch(e => next(e));
+    let integraciones = await IntMigController.listInt().catch(e => next(e));
+    let migraciones = await IntMigController.listMig().catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
 });
 
 app.get('/detail/:solicitudId', async (req, res, next) => {
-    let solicitud = await IntegracionController.read(req.params.solicitudId).catch(e => next(e));
+    let solicitud = await IntMigController.read(req.params.solicitudId).catch(e => next(e));
     res.render('detail', { solicitud: solicitud, id_sol: req.params.solicitudId });
 });
 
 
 app.post('/solicitudes/result', async (req, res, next) => {
-    let integraciones = await IntegracionController.search(req.body).catch(e => next(e));
+    let integraciones = await IntMigController.search(req.body).catch(e => next(e));
     res.render('solicitudes', {integraciones: integraciones});
 });
 

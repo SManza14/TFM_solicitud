@@ -21,7 +21,6 @@
 <h2>Integraciones</h2>
 <% if (integraciones) { %>
     <% for(var i=0; i<integraciones.length; i++) {%>
-        <% if (integraciones[i].completed === false) { %>
 <div id="solicitud">
     <p>Solicitante : <%= integraciones[i].solicitante %>  <a href="/solicitudes/<%= integraciones[i]._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a>
         <a href="/delete/<%= integraciones[i]._id%>"><button class="btn btn-danger">Eliminar</button></a>
@@ -56,7 +55,6 @@
         </table>
     </a>
 </div>
-<% } %>
 <% } %>
 <% } %>
 
