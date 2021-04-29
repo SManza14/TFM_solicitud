@@ -7,7 +7,7 @@ const IntegracionSchema = Schema({
     dateId: String,
     completed: Boolean,
     integraciones: [{
-        id: Number,
+        Intid: Number,
         OLT: String,
         central: String,
         MIGA: String,

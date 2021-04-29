@@ -7,7 +7,7 @@ const MigracionSchema = Schema({
     dateId: String,
     completed: Boolean,
     migraciones: [{
-        id: Number,
+        Migid: Number,
         OLT: String,
         central: String,
         MIGA: String,

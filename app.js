@@ -46,7 +46,12 @@ app.get('/search', (req, res, next) => {
 });
 
  app.post('/nuevaIntegracion', async (req, res, next) => {
-    await IntMigController.create(req.body).catch(e => next(e));
+    await IntMigController.createInt(req.body).catch(e => next(e));
+    res.redirect('/nuevaIntegracion');
+});
+
+app.post('/nuevaMigracion', async (req, res, next) => {
+    await IntMigController.createMig(req.body).catch(e => next(e));
     res.redirect('/nuevaIntegracion');
 });
 
@@ -82,8 +87,9 @@ app.get('/detail/:solicitudId', async (req, res, next) => {
 
 
 app.post('/solicitudes/result', async (req, res, next) => {
-    let integraciones = await IntMigController.search(req.body).catch(e => next(e));
-    res.render('solicitudes', {integraciones: integraciones});
+    let integraciones = await IntMigController.searchInteg(req.body).catch(e => next(e));
+    let migraciones = await IntMigController.searchMig(req.body).catch(e => next(e));
+    res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
 });
 
 /**

@@ -27,13 +27,13 @@ exports.read = async function(integracionId) {
     return result;
 };
 
-exports.create = async function(body) {
+exports.createInt = async function(body) {
 
     var integraciones = [];
     var nInteg;
     if (body.OLT === body.OLT.toString()){
         singleInteg = {
-            id: 0,
+            Intid: 0,
             OLT: body.OLT,
             central: body.central,
             MIGA: body.MIGA,
@@ -57,7 +57,7 @@ exports.create = async function(body) {
         nInteg = body.OLT.length;
         for(var i = 0; i < nInteg; i++){
             singleInteg = {
-                id: i,
+                Intid: i,
                 OLT: body.OLT[i],
                 central: body.central[i],
                 MIGA: body.MIGA[i],
@@ -90,6 +90,76 @@ exports.create = async function(body) {
     return result;
 };
 
+exports.createMig = async function(body) {
+
+    var migraciones = [];
+    var nMig;
+    if (body.central === body.central.toString()){
+        singleMig = {
+            Migid: 0,
+            OLT: body.OLT,
+            central: body.central,
+            MIGA: body.MIGA,
+            agregador_origen: body.agregadororigen,
+            DN_origen: body.DNorigen,
+            POP_origen: body.POPorigen,
+            agregador_destino: body.agregadordestino,
+            DN_destino: body.DNdestino,
+            POP_destino: body.POPdestino,
+            poolesIPv4JZZ: [],
+            poolLIJZZ: "",
+            RelayJZZ: "",
+            poolesDinOSP: [],
+            poolesSuspOSP: [],
+            poolesFijOSP: [],
+            poolIPv6JZZ: "",
+            poolIPv6OSP: "",
+            CGNJZZ: "",
+            CGNOSP: ""
+        };
+        console.log(singleMig);
+        migraciones.push(singleMig);
+    } else {
+        nMig = body.central.length;
+        for(var i = 0; i < nMig; i++){
+            singleMig = {
+                Migid: i,
+                OLT: body.OLT[i],
+                central: body.central[i],
+                MIGA: body.MIGA[i],
+                agregador_origen: body.agregadororigen[i],
+                DN_origen: body.DNorigen[i],
+                POP_origen: body.POPorigen[i],
+                agregador_destino: body.agregadordestino[i],
+                DN_destino: body.DNdestino[i],
+                POP_destino: body.POPdestino[i],
+                poolesIPv4JZZ: [],
+                poolLIJZZ: "",
+                RelayJZZ: "",
+                poolesDinOSP: [],
+                poolesSuspOSP: [],
+                poolesFijOSP: [],
+                poolIPv6JZZ: "",
+                poolIPv6OSP: "",
+                CGNJZZ: "",
+                CGNOSP: ""
+            };
+            console.log(singleMig)
+            migraciones.push(singleMig);
+        }
+    }
+
+    var newDoc = new Migracion({
+        solicitante: body.solicitante,
+        completed: false,
+        dateId: "",
+        migraciones: migraciones
+    });
+    let result= await newDoc.save();
+    return result;
+};
+
+
 exports.update= async function(integracionId, body) {
     let result= await Integracion.findOneAndUpdate({_id: integracionId},
         {OLT: body.OLT,
@@ -101,22 +171,27 @@ exports.update= async function(integracionId, body) {
     return result;
 }
 
-exports.delete = async function(integracionId) {
-    let result= await Integracion.deleteOne({_id: integracionId});
+exports.delete = async function(intMigId) {
+    let exists = await Integracion.findById(intMigId);
+    let result;
+    if (exists != null){
+        result= await Integracion.deleteOne({_id: intMigId});
+    }
+    exists = await Migracion.findById(intMigId);
+    if (exists != null){
+        result= await Migracion.deleteOne({_id: intMigId});
+    }
     return result;
 }
 
 exports.addPools = async function (integracionId, body) {
-    console.log(body);
     let completado = false;
     if (body.completed === "True"){
         completado = true;
     }
     let nInteg;
     let solicitud = await Integracion.findById(integracionId);
-    console.log(solicitud.integraciones);
     nInteg = solicitud.integraciones.length;
-    console.log ("el número de integraciones es de " + nInteg);
     console.log(body);
     if (nInteg === 1){
         let result= await Integracion.findOneAndUpdate({_id: integracionId},
@@ -144,6 +219,7 @@ exports.addPools = async function (integracionId, body) {
 		console.log(prev);
         for (let i = 0; i< nInteg; i++){
             integraciones.push({
+                Intid: i,
                 OLT: prev.integraciones[i].OLT,
                 central: prev.integraciones[i].central,
                 MIGA: prev.integraciones[i].MIGA,
@@ -163,7 +239,7 @@ exports.addPools = async function (integracionId, body) {
                 });
             console.log(integraciones[i]);
             console.log("el id de mi solicitud es " + integracionId)
-            let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.id': i},
+            let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.Intid': i},
                 { $set: {
                     //completed: completado,
                     dateId: body.idSolicitud,
@@ -176,7 +252,7 @@ exports.addPools = async function (integracionId, body) {
 
 };
 
-exports.search = async function (body) {
+exports.searchInteg = async function (body) {
     console.log(body);
     if (body.categoria === "id"){
         let result = await Integracion.find({dateId: body.infor});
@@ -211,6 +287,49 @@ exports.search = async function (body) {
                 {"integraciones.CGNOSP": body.infor},
                 {"integraciones.CGNJZZ": body.infor}
         ]});
+        return result;
+    }
+};
+
+
+exports.searchMig = async function (body) {
+    console.log(body);
+    if (body.categoria === "id"){
+        let result = await Migracion.find({dateId: body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "solicitante"){
+        let result = await Migracion.find({solicitante: body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "olt"){
+        let result = await Migracion.find({"migraciones.OLT": body.infor});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "agregador"){
+        let result = await Migracion.find({ $or:[
+            {"migraciones.agregador_origen": body.infor},
+            {"migraciones.agregador_destino": body.infor}
+            ]});
+        console.log(result);
+        return result;
+    }
+    else if (body.categoria === "pool") {
+        let result = await Migracion.find({ $or:[
+                {"migraciones.poolLIJZZ": body.infor},
+                {"migraciones.RelayJZZ": body.infor},
+                {"migraciones.poolesIPv4JZZ": body.infor},
+                {"migraciones.poolesDinOSP": body.infor},
+                {"migraciones.poolesSuspOSP": body.infor},
+                {"migraciones.poolesFijOSP": body.infor},
+                {"migraciones.poolIPv6JZZ": body.infor},
+                {"migraciones.poolIPv6OSP": body.infor},
+                {"migraciones.CGNOSP": body.infor},
+                {"migraciones.CGNJZZ": body.infor}
+            ]});
         return result;
     }
 };
