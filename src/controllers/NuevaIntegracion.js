@@ -55,6 +55,7 @@ exports.createInt = async function(body) {
         integraciones.push(singleInteg);
     } else {
         nInteg = body.OLT.length;
+        console.log(body);
         for(var i = 0; i < nInteg; i++){
             singleInteg = {
                 Intid: i,
