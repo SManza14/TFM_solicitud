@@ -48,7 +48,7 @@
                     <td><input type="text" id="centraL" name="central" placeholder="Central"></td>
                     <td><input type="text" id="MIGA" name="MIGA" placeholder="MIGA"></td>
                     <td>
-                        <select id="POPorigen" name="POPorigen">
+                        <select id="POPorigen1" name="POPorigen">
                             <option value='NULL'>POP</option>
                             <option value='ACERO'>ACERO</option>
                             <option value='ALBACETE'>ALBACETE</option>
@@ -132,7 +132,7 @@
                         </select>
                     </td>
                     <td>
-                        <select id="POPdestino" name="POPdestino">
+                        <select id="POPdestino1" name="POPdestino">
                             <option value='NULL'>POP</option>
                             <option value='ACERO'>ACERO</option>
                             <option value='ALBACETE'>ALBACETE</option>
@@ -215,8 +215,8 @@
                             <option value='MALAGA3'>MALAGA3</option>
                         </select>
                     </td>
-                    <td><input type="text" id="DNorigen" name="DNorigen" placeholder="Equipos de distribución origen"></td>
-                    <td><input type="text" id="DNdestino" name="DNdestino" placeholder="Equipos de distribución destino"></td>
+                    <td><input type="text" id="DNorigen1" name="DNorigen" placeholder="Equipos de distribución origen"></td>
+                    <td><input type="text" id="DNdestino1" name="DNdestino" placeholder="Equipos de distribución destino"></td>
                     <td><input type="text" id="agregadororigen" name="agregadororigen" placeholder="Agregador origen"></td>
                     <td><input type="text" id="agregadordestino" name="agregadordestino" placeholder="Agregador destino"></td>
                 </tr>
@@ -234,11 +234,10 @@
 
 <script type="text/javascript">
     var nInteg = 1
-
-    const selectPOPorigen = document.querySelector('#POPorigen');
-    const selectPOPdestino = document.querySelector('#POPdestino');
+    const selectPOPorigen = document.querySelector('#POPorigen1');
+    const selectPOPdestino = document.querySelector('#POPdestino1');
     selectPOPorigen.addEventListener('change', (event) => {
-        const DN = document.getElementById('DNorigen');
+        const DN = document.getElementById('DNorigen1');
         switch (event.target.value) {
             case 'ACERO':
                 DN.value = 'ROU13/14-HBAR01';
@@ -481,7 +480,7 @@
     });
 
         selectPOPdestino.addEventListener('change', (event) => {
-            const DN = document.getElementById('DNdestino');
+            const DN = document.getElementById('DNdestino1');
             switch (event.target.value) {
                 case 'ACERO':
                     DN.value = 'ROU13/14-HBAR01';
@@ -729,11 +728,11 @@
         var html = '';
 
         html +='<tr id="nextRow"">';
-        html +='<td><input type="text" id="OLT" name="OLT" placeholder="OLT"></td>';
-        html +='<td><input type="text" id="central" name="central" placeholder="Central"></td>';
-        html +='<td><input type="text" id="MIGA" name="MIGA" placeholder="MIGA"></td>';
+        html +='<td><input type="text" id="OLT' + nInteg + '" name="OLT" placeholder="OLT"></td>';
+        html +='<td><input type="text" id="central' + nInteg + '" name="central" placeholder="Central"></td>';
+        html +='<td><input type="text" id="MIGA' + nInteg + '" name="MIGA" placeholder="MIGA"></td>';
         html +='<td>';
-        html +='<select id="POPorigen" name="POPorigen">';
+        html +='<select id="POPorigen' + nInteg + '" name="POPorigen">';
         html +='<option value="NULL">POP</option>';
         html +='<option value="ACERO">ACERO</option>';
         html +='<option value="ALBACETE">ALBACETE</option>';
@@ -817,7 +816,7 @@
         html +='</select>';
         html +='</td>';
         html +='<td>';
-        html +='<select id="POPdestino" name="POPdestino">';
+        html +='<select id="POPdestino' + nInteg + '" name="POPdestino">';
         html +='<option value="NULL">POP</option>';
         html +='<option value="ACERO">ACERO</option>';
         html +='<option value="ALBACETE">ALBACETE</option>';
@@ -900,15 +899,503 @@
         html +='<option value="MALAGA3">MALAGA3</option>';
         html +='</select>';
         html +='</td>';
-        html +='<td><input type="text" id="DNorigen" name="DNorigen" placeholder="Equipos de distribución origen"></td>';
-        html +='<td><input type="text" id="DNdestino" name="DNdestino" placeholder="Equipos de distribución destino"></td>';
-        html +='<td><input type="text" id="agregadororigen" name="agregadororigen" placeholder="Agregador origen"></td>';
-        html +='<td><input type="text" id="agregadordestino" name="agregadordestino" placeholder="Agregador destino"></td>';
+        html +='<td><input type="text" id="DNorigen' + nInteg + '" name="DNorigen" placeholder="Equipos de distribución origen"></td>';
+        html +='<td><input type="text" id="DNdestino' + nInteg + '" name="DNdestino" placeholder="Equipos de distribución destino"></td>';
+        html +='<td><input type="text" id="agregadororigen' + nInteg + '" name="agregadororigen" placeholder="Agregador origen"></td>';
+        html +='<td><input type="text" id="agregadordestino' + nInteg + '" name="agregadordestino" placeholder="Agregador destino"></td>';
         html +='<td><button id="removeRow" type="button" class="btn btn-danger">Remove</button></td>';
         html +='</tr>';
 
 
         $('#newRow').append(html);
+
+        const selectPOPorigen = document.querySelector('#POPorigen' + nInteg);
+        const selectPOPdestino = document.querySelector('#POPdestino' + nInteg);
+        selectPOPorigen.addEventListener('change', (event) => {
+            const DN = document.getElementById('DNorigen' + nInteg);
+            switch (event.target.value) {
+                case 'ACERO':
+                    DN.value = 'ROU13/14-HBAR01';
+                    break;
+                case 'ALBACETE':
+                    DN.value = 'ABFGRAG1/2';
+                    break;
+                case 'ALICANTE':
+                    DN.value = 'AXAMRDN1/2';
+                    break;
+                case 'ALICANTE2':
+                    DN.value = 'AXANRDN1/2';
+                    break;
+                case 'ALMERIA':
+                    DN.value = 'ALDORAG1/2';
+                    break;
+                case 'AVILA':
+                    DN.value = 'AVRERAG1/2';
+                    break;
+                case 'BADAJOZ':
+                    DN.value = 'BAATRAG1/2';
+                    break;
+                case 'BADAJOZ2':
+                    DN.value = 'BAADRDN1/2';
+                    break;
+                case 'BILBAO':
+                    DN.value = 'BIJORDN1/2';
+                    break;
+                case 'BILBAO2':
+                    DN.value = 'ROU13/14-HVIZ01';
+                    break;
+                case 'BURGOS':
+                    DN.value = 'BUITRAG1/2';
+                    break;
+                case 'CACERES':
+                    DN.value = 'ROU25-HCAC02';
+                    break;
+                case 'CACERES2':
+                    DN.value = 'CCBARAG1/2';
+                    break;
+                case 'CAMARILLO1':
+                    DN.value = 'MXJCRDN1/2';
+                    break;
+                case 'CAMARILLO2':
+                    DN.value = 'MXJCRDN3/4';
+                    break;
+                case 'SANTANDER':
+                    DN.value = 'SXRURAG1/2';
+                    break;
+                case 'CASTELLON':
+                    DN.value = 'CSMORAG1/2';
+                    break;
+                case 'CAVANILLES':
+                    DN.value = 'ROU13(14-HMAD16';
+                    break;
+                case 'CIUDADREAL':
+                    DN.value = 'CRCORAG1/2';
+                    break;
+                case 'COLBRAND':
+                    DN.value = 'ROU13/14-HMAD01';
+                    break;
+                case 'CORDOBA':
+                    DN.value = 'COAVRDN1/2';
+                    break;
+                case 'ECHEGARAY':
+                    DN.value = 'ROU13/14-HMAD11';
+                    break;
+                case 'GERONA':
+                    DN.value = 'GIESRDN1/2';
+                    break;
+                case 'GERONA2':
+                    DN.value = 'GIALRDN1/2';
+                    break;
+                case 'GIJON':
+                    DN.value = 'OXGIRDN1/2';
+                    break;
+                case 'GRANADA':
+                    DN.value = 'GRLVRDN1/2';
+                    break;
+                case 'GRANADA2':
+                    DN.value = 'CRCIRDN1/2';
+                    break;
+                case 'GRANCANARIA':
+                    DN.value = 'GCTGRDN1/2';
+                    break;
+                case 'GUADALAJARA':
+                    DN.value = 'GUCARDN1/2';
+                    break;
+                case 'GUADALAJARA2':
+                    DN.value = 'GUMIRDN1/2';
+                    break;
+                case 'HISPITALET':
+                    DN.value = 'BXEURDN1/2';
+                    break;
+                case 'HUESCA':
+                    DN.value = 'ROU25-HHUE04';
+                    break;
+                case 'IBIZA':
+                    DN.value = 'IBEXRAG1/2';
+                    break;
+                case 'INDUSTRIA':
+                    DN.value = 'ROU13/14-HBAR02';
+                    break;
+                case 'JAEN':
+                    DN.value = 'JXPARAG1/2';
+                    break;
+                case 'JEREZ':
+                    DN.value = 'CACPRDN1/2';
+                    break;
+                case 'LARIOJA':
+                    DN.value = 'ROU25-HLAR02';
+                    break;
+                case 'LACORUNA':
+                    DN.value = 'CXARRDN1/2';
+                    break;
+                case 'LEON':
+                    DN.value = 'LEFRRAG1/2';
+                    break;
+                case 'LERIDA':
+                    DN.value = 'LXRORAG1/2';
+                    break;
+                case 'LUGO':
+                    DN.value = 'ROU25-HLUG04';
+                    break;
+                case 'MALAGA':
+                    DN.value = 'MASARDN1/2';
+                    break;
+                case 'MALAGA2':
+                    DN.value = 'MAHSRDN1/2';
+                    break;
+                case 'MENESES1':
+                    DN.value = 'MXMERDN3/4';
+                    break;
+                case 'MENESES3':
+                    DN.value = 'MXMERDN7/8';
+                    break;
+                case 'MURCIA':
+                    DN.value = 'MUINRDN1/2';
+                    break;
+                case 'MURCIA2':
+                    DN.value = 'MUJURDN1/2';
+                    break;
+                case 'OVIEDO':
+                    DN.value = 'OXSIRAG1/2';
+                    break;
+                case 'ORENSE':
+                    DN.value = 'ORPERAG1/2';
+                    break;
+                case 'PALENCIA':
+                    DN.value = 'ROU25-HPAL03';
+                    break;
+                case 'PALMA':
+                    DN.value = 'IBPARDN1/2';
+                    break;
+                case 'PALMA2':
+                    DN.value = 'IBESRDN1/2';
+                    break;
+                case 'PAMPLONA':
+                    DN.value = 'NAAYRAG1/2';
+                    break;
+                case 'SALAMANCA':
+                    DN.value = 'SAESRDN1/2';
+                    break;
+                case 'SALAMANCA2':
+                    DN.value = 'SAPORAG1/2';
+                    break;
+                case 'SANSEBASTIAN':
+                    DN.value = 'SSDMRAG1/2';
+                    break;
+                case 'SANTANDER2':
+                    DN.value = 'SXCORAG1/2';
+                    break;
+                case 'SEVILLA':
+                    DN.value = 'SEECRDN1/2';
+                    break;
+                case 'SEVILLA2':
+                    DN.value = 'ROU13/14-HSEV01';
+                    break;
+                case 'TARRAGONA':
+                    DN.value = 'TXRRRAG1/2';
+                    break;
+                case 'TENERIFE':
+                    DN.value = 'TFMARDN1/2';
+                    break;
+                case 'TOLEDO':
+                    DN.value = 'TOEGRAG1/2';
+                    break;
+                case 'VALENCIA':
+                    DN.value = 'VXARRDN1/2';
+                    break;
+                case 'VALENCIA3':
+                    DN.value = 'VXMFRDN1/2';
+                    break;
+                case 'VALENCIA4':
+                    DN.value = 'ROU13/14-HVAL01';
+                    break;
+                case 'VALLADOLID':
+                    DN.value = 'VARERDN1/2';
+                    break;
+                case 'VALLADOLID2':
+                    DN.value = 'VADORDN1/2';
+                    break;
+                case 'VIGO':
+                    DN.value = 'POVIRDN1/2';
+                    break;
+                case 'VITORIA':
+                    DN.value = 'VIPRRAG1/2';
+                    break;
+                case 'ZAMORA':
+                    DN.value = 'ZAPCRAG1/2';
+                    break;
+                case 'ZARAGOZA':
+                    DN.value = 'ZXPIRDN1/2';
+                    break;
+                case 'ZARAGOZA2':
+                    DN.value = 'ZXESRDN1/2';
+                    break;
+                case 'ZONAFRANCA1':
+                    DN.value = 'BXZFRDN1/2';
+                    break;
+                case 'ZONAFRANCA2':
+                    DN.value = 'BXZFRDN3/4';
+                    break;
+                case 'PALOS':
+                    DN.value = 'MXPARDN3/4';
+                    break;
+                case 'BOTANICA':
+                    DN.value = 'BXBORDN1/2';
+                    break;
+                case 'LACORUNA2':
+                    DN.value = 'CXPORAG1/2';
+                    break;
+                case 'JAEN2':
+                    DN.value = 'JXESRAG1/2';
+                    break;
+                case 'MALAGA3':
+                    DN.value = 'MABERAG1/2';
+                    break;
+            }
+        });
+
+        selectPOPdestino.addEventListener('change', (event) => {
+            const DN = document.getElementById('DNdestino' + nInteg);
+            switch (event.target.value) {
+                case 'ACERO':
+                    DN.value = 'ROU13/14-HBAR01';
+                    break;
+                case 'ALBACETE':
+                    DN.value = 'ABFGRAG1/2';
+                    break;
+                case 'ALICANTE':
+                    DN.value = 'AXAMRDN1/2';
+                    break;
+                case 'ALICANTE2':
+                    DN.value = 'AXANRDN1/2';
+                    break;
+                case 'ALMERIA':
+                    DN.value = 'ALDORAG1/2';
+                    break;
+                case 'AVILA':
+                    DN.value = 'AVRERAG1/2';
+                    break;
+                case 'BADAJOZ':
+                    DN.value = 'BAATRAG1/2';
+                    break;
+                case 'BADAJOZ2':
+                    DN.value = 'BAADRDN1/2';
+                    break;
+                case 'BILBAO':
+                    DN.value = 'BIJORDN1/2';
+                    break;
+                case 'BILBAO2':
+                    DN.value = 'ROU13/14-HVIZ01';
+                    break;
+                case 'BURGOS':
+                    DN.value = 'BUITRAG1/2';
+                    break;
+                case 'CACERES':
+                    DN.value = 'ROU25-HCAC02';
+                    break;
+                case 'CACERES2':
+                    DN.value = 'CCBARAG1/2';
+                    break;
+                case 'CAMARILLO1':
+                    DN.value = 'MXJCRDN1/2';
+                    break;
+                case 'CAMARILLO2':
+                    DN.value = 'MXJCRDN3/4';
+                    break;
+                case 'SANTANDER':
+                    DN.value = 'SXRURAG1/2';
+                    break;
+                case 'CASTELLON':
+                    DN.value = 'CSMORAG1/2';
+                    break;
+                case 'CAVANILLES':
+                    DN.value = 'ROU13(14-HMAD16';
+                    break;
+                case 'CIUDADREAL':
+                    DN.value = 'CRCORAG1/2';
+                    break;
+                case 'COLBRAND':
+                    DN.value = 'ROU13/14-HMAD01';
+                    break;
+                case 'CORDOBA':
+                    DN.value = 'COAVRDN1/2';
+                    break;
+                case 'ECHEGARAY':
+                    DN.value = 'ROU13/14-HMAD11';
+                    break;
+                case 'GERONA':
+                    DN.value = 'GIESRDN1/2';
+                    break;
+                case 'GERONA2':
+                    DN.value = 'GIALRDN1/2';
+                    break;
+                case 'GIJON':
+                    DN.value = 'OXGIRDN1/2';
+                    break;
+                case 'GRANADA':
+                    DN.value = 'GRLVRDN1/2';
+                    break;
+                case 'GRANADA2':
+                    DN.value = 'CRCIRDN1/2';
+                    break;
+                case 'GRANCANARIA':
+                    DN.value = 'GCTGRDN1/2';
+                    break;
+                case 'GUADALAJARA':
+                    DN.value = 'GUCARDN1/2';
+                    break;
+                case 'GUADALAJARA2':
+                    DN.value = 'GUMIRDN1/2';
+                    break;
+                case 'HISPITALET':
+                    DN.value = 'BXEURDN1/2';
+                    break;
+                case 'HUESCA':
+                    DN.value = 'ROU25-HHUE04';
+                    break;
+                case 'IBIZA':
+                    DN.value = 'IBEXRAG1/2';
+                    break;
+                case 'INDUSTRIA':
+                    DN.value = 'ROU13/14-HBAR02';
+                    break;
+                case 'JAEN':
+                    DN.value = 'JXPARAG1/2';
+                    break;
+                case 'JEREZ':
+                    DN.value = 'CACPRDN1/2';
+                    break;
+                case 'LARIOJA':
+                    DN.value = 'ROU25-HLAR02';
+                    break;
+                case 'LACORUNA':
+                    DN.value = 'CXARRDN1/2';
+                    break;
+                case 'LEON':
+                    DN.value = 'LEFRRAG1/2';
+                    break;
+                case 'LERIDA':
+                    DN.value = 'LXRORAG1/2';
+                    break;
+                case 'LUGO':
+                    DN.value = 'ROU25-HLUG04';
+                    break;
+                case 'MALAGA':
+                    DN.value = 'MASARDN1/2';
+                    break;
+                case 'MALAGA2':
+                    DN.value = 'MAHSRDN1/2';
+                    break;
+                case 'MENESES1':
+                    DN.value = 'MXMERDN3/4';
+                    break;
+                case 'MENESES3':
+                    DN.value = 'MXMERDN7/8';
+                    break;
+                case 'MURCIA':
+                    DN.value = 'MUINRDN1/2';
+                    break;
+                case 'MURCIA2':
+                    DN.value = 'MUJURDN1/2';
+                    break;
+                case 'OVIEDO':
+                    DN.value = 'OXSIRAG1/2';
+                    break;
+                case 'ORENSE':
+                    DN.value = 'ORPERAG1/2';
+                    break;
+                case 'PALENCIA':
+                    DN.value = 'ROU25-HPAL03';
+                    break;
+                case 'PALMA':
+                    DN.value = 'IBPARDN1/2';
+                    break;
+                case 'PALMA2':
+                    DN.value = 'IBESRDN1/2';
+                    break;
+                case 'PAMPLONA':
+                    DN.value = 'NAAYRAG1/2';
+                    break;
+                case 'SALAMANCA':
+                    DN.value = 'SAESRDN1/2';
+                    break;
+                case 'SALAMANCA2':
+                    DN.value = 'SAPORAG1/2';
+                    break;
+                case 'SANSEBASTIAN':
+                    DN.value = 'SSDMRAG1/2';
+                    break;
+                case 'SANTANDER2':
+                    DN.value = 'SXCORAG1/2';
+                    break;
+                case 'SEVILLA':
+                    DN.value = 'SEECRDN1/2';
+                    break;
+                case 'SEVILLA2':
+                    DN.value = 'ROU13/14-HSEV01';
+                    break;
+                case 'TARRAGONA':
+                    DN.value = 'TXRRRAG1/2';
+                    break;
+                case 'TENERIFE':
+                    DN.value = 'TFMARDN1/2';
+                    break;
+                case 'TOLEDO':
+                    DN.value = 'TOEGRAG1/2';
+                    break;
+                case 'VALENCIA':
+                    DN.value = 'VXARRDN1/2';
+                    break;
+                case 'VALENCIA3':
+                    DN.value = 'VXMFRDN1/2';
+                    break;
+                case 'VALENCIA4':
+                    DN.value = 'ROU13/14-HVAL01';
+                    break;
+                case 'VALLADOLID':
+                    DN.value = 'VARERDN1/2';
+                    break;
+                case 'VALLADOLID2':
+                    DN.value = 'VADORDN1/2';
+                    break;
+                case 'VIGO':
+                    DN.value = 'POVIRDN1/2';
+                    break;
+                case 'VITORIA':
+                    DN.value = 'VIPRRAG1/2';
+                    break;
+                case 'ZAMORA':
+                    DN.value = 'ZAPCRAG1/2';
+                    break;
+                case 'ZARAGOZA':
+                    DN.value = 'ZXPIRDN1/2';
+                    break;
+                case 'ZARAGOZA2':
+                    DN.value = 'ZXESRDN1/2';
+                    break;
+                case 'ZONAFRANCA1':
+                    DN.value = 'BXZFRDN1/2';
+                    break;
+                case 'ZONAFRANCA2':
+                    DN.value = 'BXZFRDN3/4';
+                    break;
+                case 'PALOS':
+                    DN.value = 'MXPARDN3/4';
+                    break;
+                case 'BOTANICA':
+                    DN.value = 'BXBORDN1/2';
+                    break;
+                case 'LACORUNA2':
+                    DN.value = 'CXPORAG1/2';
+                    break;
+                case 'JAEN2':
+                    DN.value = 'JXESRAG1/2';
+                    break;
+                case 'MALAGA3':
+                    DN.value = 'MABERAG1/2';
+                    break;
+            }
+        });
     });
 
     // remove row
