@@ -138,9 +138,14 @@ app.get('/delete/:solicitudId', async (req, res, next) => {
     res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
 });
 
-app.get('/detail/:solicitudId', async (req, res, next) => {
-    let solicitud = await IntMigController.read(req.params.solicitudId).catch(e => next(e));
-    res.render('detail', { solicitud: solicitud, id_sol: req.params.solicitudId });
+app.get('/detail/integracion/:solicitudId', async (req, res, next) => {
+    let solicitud = await IntMigController.readInt(req.params.solicitudId).catch(e => next(e));
+    res.render('detailIntegracion', { solicitud: solicitud, id_sol: req.params.solicitudId });
+});
+
+app.get('/detail/migracion/:solicitudId', async (req, res, next) => {
+    let solicitud = await IntMigController.readMig(req.params.solicitudId).catch(e => next(e));
+    res.render('detailMigracion', { solicitud: solicitud, id_sol: req.params.solicitudId });
 });
 
 

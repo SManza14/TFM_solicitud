@@ -20,8 +20,15 @@ exports.listMig = async function() {
     };
 };
 
-exports.read = async function(integracionId) {
+exports.readInt = async function(integracionId) {
     let result = await Integracion.findById(integracionId);
+    console.log(result);
+    console.log(result.solicitante);
+    return result;
+};
+
+exports.readMig = async function(migracionId) {
+    let result = await Migracion.findById(migracionId);
     console.log(result);
     console.log(result.solicitante);
     return result;
