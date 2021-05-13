@@ -1,5 +1,5 @@
-const config = require("../config/auth.config");
-const db = require("../models");
+const config = require("../config/auth");
+const db = require("../model");
 const User = db.user;
 const Role = db.role;
 
@@ -37,7 +37,7 @@ exports.signup = (req, res) => {
                             return;
                         }
 
-                        res.send({ message: "User was registered successfully!" });
+                        res.redirect('/home');
                     });
                 }
             );
@@ -55,7 +55,7 @@ exports.signup = (req, res) => {
                         return;
                     }
 
-                    res.send({ message: "User was registered successfully!" });
+                    res.redirect('/home');
                 });
             });
         }
@@ -74,7 +74,7 @@ exports.signin = (req, res) => {
             }
 
             if (!user) {
-                return res.status(404).send({ message: "User Not found." });
+                return res.status(404).redirect('/');
             }
 
             let passwordIsValid = bcrypt.compareSync(
@@ -83,10 +83,7 @@ exports.signin = (req, res) => {
             );
 
             if (!passwordIsValid) {
-                return res.status(401).send({
-                    accessToken: null,
-                    message: "Invalid Password!"
-                });
+                return res.status(401).redirect('/');
             }
 
             let token = jwt.sign({ id: user.id }, config.secret, {
@@ -98,12 +95,6 @@ exports.signin = (req, res) => {
             for (let i = 0; i < user.roles.length; i++) {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             }
-            res.status(200).send({
-                id: user._id,
-                username: user.username,
-                email: user.email,
-                roles: authorities,
-                accessToken: token
-            });
+            res.status(200).redirect('/home');
         });
 };

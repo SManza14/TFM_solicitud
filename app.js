@@ -4,7 +4,7 @@ const cors = require("cors");
 const methodOverride = require('method-override');
 const path = require('path');
 const IntMigController = require('./src/controllers/NuevaIntegracion');
-const db = require("./app/models");
+const db = require("./src/model");
 const Role = db.role;
 
 const app = express();
@@ -72,9 +72,16 @@ app.set('view engine', 'ejs');
 require('./src/routes/auth')(app);
 require('./src/routes/user')(app);
 
+
+app.get('/', (req, res, next) => {
+    res.render('login');
+
+});
+
+/*
 app.get('/', (req, res, next) => {
     res.redirect('/home');
-});
+});*/
 
 app.get('/home', async (req, res, next) => {
     res.render('index');
@@ -90,6 +97,10 @@ app.get('/nuevaMigracion', (req, res, next) => {
 
 app.get('/search', (req, res, next) => {
     res.render('search');
+});
+
+app.get('/signup', (req, res, next) => {
+    res.render('signup');
 });
 
  app.post('/nuevaIntegracion', async (req, res, next) => {
