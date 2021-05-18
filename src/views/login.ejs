@@ -50,5 +50,9 @@
         </form>
     </div>
 
+    <% if (ErrMessage) { %>
+        <div id="error" style="color: crimson"><p> <%= ErrMessage %></p></div>
+    <% } %>
+
 </body>
 </html>

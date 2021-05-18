@@ -42,8 +42,8 @@ isAdmin = (req, res, next) => {
                     next();
                     return;
                 }
-
-                res.status(403).send({ message: "Require Admin Role!" });
+                let ErrMessage = "No tienes permiso para realizar esta acción."
+                res.status(403).render("index", {ErrMessage: ErrMessage});
                 return;
             }
         );
@@ -68,13 +68,13 @@ isModerator = (req, res, next) => {
                 }
 
 
-                if (roles[0].name === "moderator" || roles.name === "admin") {
+                if (roles[0].name === "moderator" || roles[0].name === "admin") {
                     next();
                     return;
                 }
 
-
-                res.status(403).send({ message: "Require Moderator Role!" });
+                let ErrMessage = "No tienes permiso para realizar esta acción."
+                res.status(403).render("index", {ErrMessage: ErrMessage});
                 return;
             }
         );

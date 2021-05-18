@@ -19,6 +19,10 @@
     <%- include('partials/header.ejs') %>
     <p>Página principal</p>
 
+    <% if (ErrMessage) { %>
+        <div id="error" style="color: crimson"><p> <%= ErrMessage %></p></div>
+    <% } %>
+
     <div>
         <h2><b>Navegación</b></h2>
         <ul>

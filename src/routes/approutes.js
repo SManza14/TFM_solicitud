@@ -11,17 +11,12 @@ module.exports = function(app) {
     });
 
     app.get('/', (req, res, next) => {
-        res.render('login');
+        res.render('login', {ErrMessage: undefined});
 
     });
 
-    /*
-    app.get('/', (req, res, next) => {
-        res.redirect('/home');
-    });*/
-
     app.get('/home', [authJwt.verifyToken], async (req, res, next) => {
-        res.render('index');
+        res.render('index', {ErrMessage: undefined});
     });
 
     app.get('/nuevaIntegracion', [authJwt.verifyToken], (req, res, next) => {
@@ -37,7 +32,7 @@ module.exports = function(app) {
     });
 
     app.get('/signup', [authJwt.verifyToken, authJwt.isAdmin], (req, res, next) => {
-        res.render('signup');
+        res.render('signup', {ErrMessage: undefined});
     });
 
     app.post('/nuevaIntegracion', [authJwt.verifyToken], async (req, res, next) => {
@@ -50,43 +45,42 @@ module.exports = function(app) {
         res.redirect('/nuevaIntegracion');
     });
 
-    app.get('/solicitudes', [authJwt.verifyToken], async (req, res, next) => {
+    app.get('/solicitudes', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let integraciones = await IntMigController.listInt().catch(e => next(e));
         let migraciones = await IntMigController.listMig().catch(e => next(e));
         res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
     });
 
-    app.get('/solicitudes/:solicitudId/fillIntegracion', [authJwt.verifyToken], async (req, res, next) => {
-        let solicitudToFill = await IntMigController.read(req.params.solicitudId).catch(e => next(e));
+    app.get('/solicitudes/:solicitudId/fillIntegracion', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
+        let solicitudToFill = await IntMigController.readInt(req.params.solicitudId).catch(e => next(e));
         res.render('fillIntegracion', { solicitud: solicitudToFill, id_sol: req.params.solicitudId });
     });
 
-    app.post('/solicitudes/:solicitudId/fillIntegracion', [authJwt.verifyToken], async (req, res, next) => {
+    app.post('/solicitudes/:solicitudId/fillIntegracion', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let solicitud = await IntMigController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
         let integraciones = await IntMigController.listInt().catch(e => next(e));
         let migraciones = await IntMigController.listMig().catch(e => next(e));
         res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
     });
 
-    app.get('/delete/:solicitudId', [authJwt.verifyToken], async (req, res, next) => {
+    app.get('/delete/:solicitudId', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let deleted = await IntMigController.delete(req.params.solicitudId).catch(e => next(e));
         let integraciones = await IntMigController.listInt().catch(e => next(e));
         let migraciones = await IntMigController.listMig().catch(e => next(e));
         res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
     });
 
-    app.get('/detail/integracion/:solicitudId', [authJwt.verifyToken], async (req, res, next) => {
+    app.get('/detail/integracion/:solicitudId', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let solicitud = await IntMigController.readInt(req.params.solicitudId).catch(e => next(e));
         res.render('detailIntegracion', { solicitud: solicitud, id_sol: req.params.solicitudId });
     });
 
-    app.get('/detail/migracion/:solicitudId', [authJwt.verifyToken], async (req, res, next) => {
+    app.get('/detail/migracion/:solicitudId', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let solicitud = await IntMigController.readMig(req.params.solicitudId).catch(e => next(e));
         res.render('detailMigracion', { solicitud: solicitud, id_sol: req.params.solicitudId });
     });
 
-
-    app.post('/solicitudes/result', [authJwt.verifyToken], async (req, res, next) => {
+    app.post('/solicitudes/result', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
         let integraciones = await IntMigController.searchInteg(req.body).catch(e => next(e));
         let migraciones = await IntMigController.searchMig(req.body).catch(e => next(e));
         res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});

@@ -12,7 +12,7 @@ var corsOptions = {
     origin: "http://localhost:8081"
 };
 
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 
 const mongoose = require('mongoose');
 (async () => {

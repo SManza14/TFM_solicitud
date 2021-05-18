@@ -74,7 +74,8 @@ exports.signin = (req, res) => {
             }
 
             if (!user) {
-                return res.status(404).redirect('/');
+                let ErrMessage = "Usuario incorrecto."
+                return res.status(404).render('login', {ErrMessage: ErrMessage});
             }
 
             let passwordIsValid = bcrypt.compareSync(
@@ -83,7 +84,8 @@ exports.signin = (req, res) => {
             );
 
             if (!passwordIsValid) {
-                return res.status(401).redirect('/');
+                let ErrMessage = "Contraseña no válida."
+                return res.status(404).render('login', {ErrMessage: ErrMessage});
             }
 
             let token = jwt.sign({ id: user.id }, config.secret, {
