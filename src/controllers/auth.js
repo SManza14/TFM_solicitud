@@ -95,6 +95,15 @@ exports.signin = (req, res) => {
             for (let i = 0; i < user.roles.length; i++) {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             }
+
+            let options = {
+                path:"/",
+                sameSite:true,
+                maxAge: 1000 * 60 * 60 * 24, // would expire after 24 hours
+                httpOnly: true, // The cookie only accessible by the web server
+            }
+
+            res.cookie('x-access-token',token, options)
             res.status(200).redirect('/home');
         });
 };

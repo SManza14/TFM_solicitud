@@ -5,7 +5,8 @@ const User = db.user;
 const Role = db.role;
 
 verifyToken = (req, res, next) => {
-    let token = req.headers["x-access-token"];
+
+    let token = req.cookies['x-access-token'];
 
     if (!token) {
         return res.status(403).send({ message: "No token provided!" });
@@ -36,12 +37,10 @@ isAdmin = (req, res, next) => {
                     res.status(500).send({ message: err });
                     return;
                 }
-
-                for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].name === "admin") {
-                        next();
-                        return;
-                    }
+                console.log(roles);
+                if (roles[0].name === "admin") {
+                    next();
+                    return;
                 }
 
                 res.status(403).send({ message: "Require Admin Role!" });
@@ -68,12 +67,12 @@ isModerator = (req, res, next) => {
                     return;
                 }
 
-                for (let i = 0; i < roles.length; i++) {
-                    if (roles[i].name === "moderator") {
-                        next();
-                        return;
-                    }
+
+                if (roles[0].name === "moderator" || roles.name === "admin") {
+                    next();
+                    return;
                 }
+
 
                 res.status(403).send({ message: "Require Moderator Role!" });
                 return;
