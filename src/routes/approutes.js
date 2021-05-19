@@ -15,7 +15,8 @@ module.exports = function(app) {
 
     });
 
-    app.get('/home', [authJwt.verifyToken], async (req, res, next) => {
+    app.get('/home', [authJwt.verifyToken, ], async (req, res, next) => {
+        console.log(req.headers);
         res.render('index', {ErrMessage: undefined});
     });
 
@@ -27,7 +28,7 @@ module.exports = function(app) {
         res.render('nuevaMigracion');
     });
 
-    app.get('/search', [authJwt.verifyToken], (req, res, next) => {
+    app.get('/search', [authJwt.verifyToken, authJwt.isModerator], (req, res, next) => {
         res.render('search');
     });
 
@@ -57,7 +58,19 @@ module.exports = function(app) {
     });
 
     app.post('/solicitudes/:solicitudId/fillIntegracion', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
-        let solicitud = await IntMigController.addPools(req.params.solicitudId, req.body).catch(e => next(e));
+        let solicitud = await IntMigController.addPoolsInt(req.params.solicitudId, req.body).catch(e => next(e));
+        let integraciones = await IntMigController.listInt().catch(e => next(e));
+        let migraciones = await IntMigController.listMig().catch(e => next(e));
+        res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});
+    });
+
+    app.get('/solicitudes/:solicitudId/fillMigracion', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
+        let solicitudToFill = await IntMigController.readMig(req.params.solicitudId).catch(e => next(e));
+        res.render('llenaMigracion', { solicitud: solicitudToFill, id_sol: req.params.solicitudId });
+    });
+
+    app.post('/solicitudes/:solicitudId/fillMigracion', [authJwt.verifyToken, authJwt.isModerator], async (req, res, next) => {
+        let solicitud = await IntMigController.addPoolsMig(req.params.solicitudId, req.body).catch(e => next(e));
         let integraciones = await IntMigController.listInt().catch(e => next(e));
         let migraciones = await IntMigController.listMig().catch(e => next(e));
         res.render('solicitudes', {integraciones: integraciones, migraciones: migraciones});

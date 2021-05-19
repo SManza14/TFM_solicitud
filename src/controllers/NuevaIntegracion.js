@@ -192,7 +192,7 @@ exports.delete = async function(intMigId) {
     return result;
 }
 
-exports.addPools = async function (integracionId, body) {
+exports.addPoolsInt = async function (integracionId, body) {
     let completado = false;
     if (body.completed === "True"){
         completado = true;
@@ -204,8 +204,9 @@ exports.addPools = async function (integracionId, body) {
     if (nInteg === 1){
         let result= await Integracion.findOneAndUpdate({_id: integracionId},
             { $set: {
-                    //completed: completado,
+                    completed: completado,
                     dateId: body.idSolicitud,
+                    'integraciones.0.Intid': 0,
                     'integraciones.0.poolesIPv4JZZ': body.PoolJZZ0,
                     'integraciones.0.poolLIJZZ': body.PoolLIJZZ0,
                     'integraciones.0.RelayJZZ': body.RelayJZZ0,
@@ -249,13 +250,86 @@ exports.addPools = async function (integracionId, body) {
             console.log("el id de mi solicitud es " + integracionId)
             let result= await Integracion.findOneAndUpdate({_id: integracionId, 'integraciones.Intid': i},
                 { $set: {
-                    //completed: completado,
+                    completed: completado,
                     dateId: body.idSolicitud,
                     'integraciones.$': integraciones[i]
                     }}
             );
         }
-        return console.log("Ojala salga bien.");
+        return;
+    }
+
+};
+
+exports.addPoolsMig = async function (migracionId, body) {
+    let completado = false;
+    if (body.completed === "True"){
+        completado = true;
+    }
+    let nMig;
+    let solicitud = await Migracion.findById(migracionId);
+    nMig = solicitud.migraciones.length;
+    console.log(body);
+    if (nMig === 1){
+
+        let result= await Migracion.findOneAndUpdate({_id: migracionId},
+            { $set: {
+                    completed: completado,
+                    dateId: body.idSolicitud,
+                    'migraciones.0.Migid': 0,
+                    'migraciones.0.poolesIPv4JZZ': body.PoolJZZ0.replace(" ", "").split("+"),
+                    'migraciones.0.poolLIJZZ': body.PoolLIJZZ0.replace(" ", ""),
+                    'migraciones.0.RelayJZZ': body.RelayJZZ0.replace(" ", ""),
+                    'migraciones.0.poolesDinOSP': body.PoolDinOSP0.replace(" ", "").split("+"),
+                    'migraciones.0.poolesSuspOSP': body.PoolSuspOSP0.replace(" ", "").split("+"),
+                    'migraciones.0.poolesFijOSP': body.PoolFijOSP0.replace(" ", "").split("+"),
+                    'migraciones.0.poolIPv6JZZ': body.PoolIPv6JZZ0.replace(" ", ""),
+                    'migraciones.0.poolIPv6OSP': body.PoolIPv6OSP0.replace(" ", ""),
+                    'migraciones.0.CGNJZZ': body.PoolCGNJZZ0.replace(" ", ""),
+                    'migraciones.0.CGNOSP': body.PoolCGNOSP0.replace(" ", "")
+
+                }});
+        return result;
+    } else {
+        let migraciones = [];
+        let bodyvalues = Object.values(body);
+        console.log(bodyvalues);
+        let prev= await Migracion.findById(migracionId);
+        console.log(prev);
+        for (let i = 0; i< nMig; i++){
+            migraciones.push({
+                Migid: i,
+                OLT: prev.migraciones[i].OLT,
+                central: prev.migraciones[i].central,
+                MIGA: prev.migraciones[i].MIGA,
+                agregador_origen: prev.migraciones[i].agregador_origen,
+                DN_origen: prev.migraciones[i].DN_origen,
+                POP_origen: prev.migraciones[i].POP_origen,
+                agregador_destino: prev.migraciones[i].agregador_destino,
+                DN_destino: prev.migraciones[i].DN_destino,
+                POP_destino: prev.migraciones[i].POP_destino,
+                poolesDinOSP: bodyvalues[i*10+2].replace(" ", "").split("+"),
+                poolesSuspOSP: bodyvalues[i*10+3].replace(" ", "").split("+"),
+                poolesFijOSP: bodyvalues[i*10+4].replace(" ", "").split("+"),
+                poolIPv6OSP: bodyvalues[i*10+5].replace(" ", ""),
+                CGNOSP: bodyvalues[i*10+6].replace(" ", ""),
+                poolesIPv4JZZ: bodyvalues[i*10+7].replace(" ", "").split("+"),
+                poolLIJZZ: bodyvalues[i*10+8].replace(" ", ""),
+                RelayJZZ: bodyvalues[i*10+9].replace(" ", ""),
+                poolIPv6JZZ: bodyvalues[i*10+10].replace(" ", ""),
+                CGNJZZ: bodyvalues[i*10+11].replace(" ", "")
+            });
+            console.log(migraciones[i]);
+            console.log("el id de mi solicitud es " + migracionId)
+            let result = await Migracion.findOneAndUpdate({_id: migracionId, 'migraciones.Migid': i},
+                { $set: {
+                        completed: completado,
+                        dateId: body.idSolicitud,
+                        'migraciones.$': migraciones[i]
+                    }}
+            );
+        }
+        return;
     }
 
 };
