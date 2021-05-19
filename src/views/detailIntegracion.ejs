@@ -19,7 +19,7 @@
 <%- include('partials/header.ejs') %>
 
 <h3>Id de la solicitud: <%= solicitud.dateId %></h3>
-<h3>Solicitante: <%= solicitud.solicitante %></h3>
+<h3>Solicitante: <%= solicitud.solicitante %>   <a href="/solicitudes/<%= solicitud._id%>/fillIntegracion"><button class="btn btn-primary">Editar</button></a></h3>
 
 <div>
 
@@ -71,12 +71,24 @@
                             <tbody>
 
                             <tr>
-                                <td><%= solicitud.integraciones[j].poolesDinOSP %></td>
-                                <td><%= solicitud.integraciones[j].poolesSuspOSP %></td>
-                                <td><%= solicitud.integraciones[j].poolesFijOSP  %></td>
+                                <td><% for(var k=0; k<solicitud.integraciones[j].poolesDinOSP.length; k++) {%>
+                                        <%= solicitud.integraciones[j].poolesDinOSP[k] %><br>
+                                    <% } %>
+                                </td>
+                                <td><% for(var k=0; k<solicitud.integraciones[j].poolesSuspOSP.length; k++) {%>
+                                        <%= solicitud.integraciones[j].poolesSuspOSP[k] %><br>
+                                    <% } %>
+                                </td>
+                                <td><% for(var k=0; k<solicitud.integraciones[j].poolesFijOSP.length; k++) {%>
+                                        <%= solicitud.integraciones[j].poolesFijOSP[k] %><br>
+                                    <% } %>
+                                </td>
                                 <td><%= solicitud.integraciones[j].poolIPv6OSP %></td>
                                 <td><%= solicitud.integraciones[j].CGNOSP %></td>
-                                <td><%= solicitud.integraciones[j].poolesIPv4JZZ %></td>
+                                <td><% for(var k=0; k<solicitud.integraciones[j].poolesIPv4JZZ.length; k++) {%>
+                                        <%= solicitud.integraciones[j].poolesIPv4JZZ[k] %><br>
+                                    <% } %>
+                                </td>
                                 <td><%= solicitud.integraciones[j].RelayJZZ  %></td>
                                 <td><%= solicitud.integraciones[j].poolLIJZZ %></td>
                                 <td><%= solicitud.integraciones[j].poolIPv6JZZ %></td>

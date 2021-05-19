@@ -19,7 +19,7 @@
 <%- include('partials/header.ejs') %>
 
 <h3>Id de la solicitud: <%= solicitud.dateId %></h3>
-<h3>Solicitante: <%= solicitud.solicitante %></h3>
+<h3>Solicitante: <%= solicitud.solicitante %>   <a href="/solicitudes/<%= solicitud._id%>/fillMigracion"><button class="btn btn-primary">Editar</button></a></h3>
 
 <div>
 
@@ -77,17 +77,28 @@
                             <tbody>
 
                             <tr>
-                                <td><%= solicitud.migraciones[j].poolesDinOSP %></td>
-                                <td><%= solicitud.migraciones[j].poolesSuspOSP %></td>
-                                <td><%= solicitud.migraciones[j].poolesFijOSP  %></td>
+                                <td><% for(var k=0; k<solicitud.migraciones[j].poolesDinOSP.length; k++) {%>
+                                        <%= solicitud.migraciones[j].poolesDinOSP[k] %><br>
+                                    <% } %>
+                                </td>
+                                <td><% for(var k=0; k<solicitud.migraciones[j].poolesSuspOSP.length; k++) {%>
+                                        <%= solicitud.migraciones[j].poolesSuspOSP[k] %><br>
+                                    <% } %>
+                                </td>
+                                <td><% for(var k=0; k<solicitud.migraciones[j].poolesFijOSP.length; k++) {%>
+                                        <%= solicitud.migraciones[j].poolesFijOSP[k] %><br>
+                                    <% } %>
+                                </td>
                                 <td><%= solicitud.migraciones[j].poolIPv6OSP %></td>
                                 <td><%= solicitud.migraciones[j].CGNOSP %></td>
-                                <td><%= solicitud.migraciones[j].poolesIPv4JZZ %></td>
+                                <td><% for(var k=0; k<solicitud.migraciones[j].poolesIPv4JZZ.length; k++) {%>
+                                        <%= solicitud.migraciones[j].poolesIPv4JZZ[k] %><br>
+                                    <% } %>
+                                </td>
                                 <td><%= solicitud.migraciones[j].RelayJZZ  %></td>
                                 <td><%= solicitud.migraciones[j].poolLIJZZ %></td>
                                 <td><%= solicitud.migraciones[j].poolIPv6JZZ %></td>
                                 <td><%= solicitud.migraciones[j].CGNJZZ %></td>
-
                             </tr>
                             </tbody>
                         </table>
