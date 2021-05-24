@@ -15,6 +15,12 @@ module.exports = function(app) {
 
     });
 
+    //Para Crear un usuario maestro, descomentar y comentar la ruta de arriba
+    /*app.get('/', (req, res, next) => {
+        res.render('home', {ErrMessage: undefined});
+
+    });*/
+
     app.get('/home', [authJwt.verifyToken, ], async (req, res, next) => {
         console.log(req.headers);
         res.render('index', {ErrMessage: undefined});
