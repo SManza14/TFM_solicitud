@@ -17,31 +17,17 @@
 
 <body>
     <%- include('partials/header.ejs') %>
-    <p>Página principal</p>
 
     <% if (ErrMessage) { %>
         <div id="error" style="color: crimson"><p> <%= ErrMessage %></p></div>
     <% } %>
 
-    <div>
-        <h2><b>Navegación</b></h2>
-        <ul>
-            <li>
-                <a href="/nuevaIntegracion">
-                    <b>Nueva Integración</b>
-                </a>
-            </li>
-            <li>
-                <a  href="/nuevaMigracion">
-                    <b>Nueva Migración</b>
-                </a>
-            </li>
-            <li>
-                <a href="/solicitudes">
-                    <b>Solicitudes</b>
-                </a>
-            </li>
-        </ul>
+    <div class="d-flex align-items-center justify-content-center">
+        <h2><b>Portal de gestión de solicitudes de direccionamiento</b></h2>
+        <br/>
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
+        <p><b>Utiliza el menú de navegación para realizar las distintas acciones.</b></p>
     </div>
     <%- include('partials/footer.ejs') %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
